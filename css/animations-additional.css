@@ -1,0 +1,54 @@
+/* 页面加载动画 - 页面元素渐现效果 */
+body {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+header, main, footer {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out 0.2s forwards;
+}
+
+.countdown-display {
+    opacity: 0;
+    animation: fadeInDown 0.8s ease-out 0.4s forwards;
+}
+
+.wish-form {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out 0.6s forwards;
+}
+
+.wish-gallery {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out 0.8s forwards;
+}
+
+/* 触摸设备优化 - 按钮触摸反馈 */
+@media (hover: none) and (pointer: coarse) {
+    .wish-submit-btn,
+    .btn-secondary,
+    .btn-ghost,
+    .wish-delete-btn {
+        transition: all 0.1s ease-out;
+    }
+
+    .wish-submit-btn:active,
+    .btn-secondary:active,
+    .btn-ghost:active,
+    .wish-delete-btn:active {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+}
+
+/* 添加新的加载动画关键帧 */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,662 @@
+/* 
+ * 额外的组件样式
+ * 为HTML中引用的类提供样式支持
+ */
+
+/* 状态消息容器 */
+.status-message-container {
+    margin-top: var(--spacing-2);
+    min-height: 0;
+    transition: all var(--transition-base) var(--ease-out);
+}
+
+.status-message-container:empty {
+    display: none;
+}
+
+/* 表单组 */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+/* 表单操作区域 */
+.form-actions {
+    display: flex;
+    gap: var(--spacing-3);
+    flex-wrap: wrap;
+}
+
+/* 愿望计数器 */
+.wish-counter {
+    font-size: var(--font-size-sm);
+    color: var(--color-silver-white-dim);
+    text-align: right;
+    font-family: var(--font-family-mono);
+    margin-top: var(--spacing-1);
+}
+
+/* 愿望统计 */
+.wish-stats {
+    text-align: center;
+    margin: var(--spacing-2) 0;
+}
+
+/* 快捷操作区域 */
+.quick-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--spacing-4);
+}
+
+.quick-actions-container {
+    display: flex;
+    gap: var(--spacing-3);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* 愿望画廊容器 */
+.wish-gallery-container {
+    width: 100%;
+    margin-top: var(--spacing-3);
+}
+
+/* 页脚内容 */
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    align-items: center;
+}
+
+.footer-links {
+    display: flex;
+    gap: var(--spacing-2);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.footer-links a {
+    transition: color var(--transition-base) var(--ease-out);
+}
+
+.footer-links a:hover {
+    color: var(--color-radiant-gold);
+}
+
+.footer-tech {
+    font-size: var(--font-size-xs);
+    opacity: 0.7;
+    margin-top: var(--spacing-1);
+}
+
+/* 可访问性焦点样式 */
+.focusable:focus {
+    outline: 2px solid var(--color-radiant-gold);
+    outline-offset: 2px;
+    background: var(--color-midnight-blue-light);
+    color: var(--color-silver-white);
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--border-radius-sm);
+    text-decoration: none;
+}
+
+/* 倒计时状态文本 */
+.countdown-status-text {
+    text-align: center;
+    margin-top: var(--spacing-3);
+    font-size: var(--font-size-lg);
+    color: var(--color-silver-white);
+    font-weight: var(--font-weight-medium);
+    min-height: 1.5em;
+}
+
+/* 空状态增强 */
+.empty-state {
+    padding: var(--spacing-8) var(--spacing-4);
+    text-align: center;
+    color: var(--color-silver-white-dim);
+}
+
+.empty-state-icon {
+    font-size: var(--font-size-5xl);
+    margin-bottom: var(--spacing-3);
+    opacity: 0.6;
+}
+
+.empty-state-text {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-2);
+    color: var(--color-silver-white);
+}
+
+.empty-state-subtext {
+    font-size: var(--font-size-sm);
+    opacity: 0.7;
+}
+
+/* 响应式工具类 */
+@media (max-width: 768px) {
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .quick-actions-container {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .quick-actions-container .btn-ghost {
+        width: 100%;
+    }
+    
+    .footer-links {
+        flex-direction: column;
+        gap: var(--spacing-1);
+    }
+}
+
+@media (min-width: 768px) {
+    .md\:flex-row {
+        flex-direction: row;
+    }
+    
+    .md\:items-center {
+        align-items: center;
+    }
+    
+    .md\:justify-between {
+        justify-content: space-between;
+    }
+    
+    .md\:justify-center {
+        justify-content: center;
+    }
+}
+
+@media (min-width: 1024px) {
+    .lg\:flex-row {
+        flex-direction: row;
+    }
+    
+    .lg\:gap-6 {
+        gap: var(--spacing-6);
+    }
+}
+
+/*
+ * 粒子画布样式
+ */
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.7;
+    mix-blend-mode: screen; /* 增强粒子视觉效果 */
+}
+
+/*
+ * 倒计时强度样式增强
+ */
+.countdown-display.intensity-medium {
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
+}
+
+.countdown-display.intensity-high {
+    transform: scale(1.05);
+    animation: pulse 1s ease-in-out infinite;
+}
+
+.countdown-display.intensity-critical {
+    transform: scale(1.1);
+    animation: countdownPulse 0.5s ease-in-out infinite;
+    text-shadow: 0 0 20px var(--color-radiant-gold);
+}
+
+/*
+ * 性能监控指示器（可选）
+ */
+.performance-indicator {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: monospace;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.performance-indicator.good {
+    border-left: 3px solid #4caf50;
+}
+
+.performance-indicator.warning {
+    border-left: 3px solid #ff9800;
+}
+
+.performance-indicator.critical {
+    border-left: 3px solid #f44336;
+}
+
+/*
+ * 粒子效果增强
+ */
+.particle-enhanced {
+    filter: drop-shadow(0 0 4px currentColor);
+}
+
+/*
+ * 画布性能优化
+ */
+@media (prefers-reduced-motion: reduce) {
+    #particle-canvas {
+        opacity: 0.3; /* 降低动画强度 */
+    }
+}
+
+/* 愿望管理器额外样式 */
+
+/* 愿望表单增强 */
+.wish-form {
+    background: rgba(255, 255, 255, 0.03);
+    padding: var(--spacing-4);
+    border-radius: var(--border-radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+}
+
+/* 愿望输入框状态 */
+.wish-input:focus {
+    outline: none;
+    border-color: var(--color-radiant-gold);
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+}
+
+.wish-input.error {
+    border-color: var(--color-error);
+    background: rgba(220, 53, 69, 0.1);
+    animation: shake 0.5s ease-out;
+}
+
+.wish-input.success {
+    border-color: var(--color-success);
+    background: rgba(40, 167, 69, 0.1);
+}
+
+/* 愿望提交按钮状态 */
+.wish-submit-btn.loading {
+    opacity: 0.8;
+    cursor: wait;
+    position: relative;
+}
+
+.wish-submit-btn.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid var(--color-midnight-blue-dark);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: rotate 0.8s linear infinite;
+}
+
+/* 愿望计数器状态 */
+.wish-counter.warning {
+    color: var(--color-warning);
+    font-weight: var(--font-weight-bold);
+}
+
+.wish-counter.error {
+    color: var(--color-error);
+    font-weight: var(--font-weight-bold);
+}
+
+/* 愿望卡片删除按钮 */
+.wish-delete-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(255, 68, 68, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    opacity: 0;
+    z-index: 2;
+}
+
+.wish-card:hover .wish-delete-btn {
+    opacity: 1;
+}
+
+.wish-delete-btn:hover {
+    background: rgba(255, 68, 68, 1);
+    transform: scale(1.1);
+}
+
+/* 愿望消息容器 */
+.wish-message {
+    margin-top: var(--spacing-2);
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-sm);
+    text-align: center;
+    animation: slideUp 0.3s ease-out;
+}
+
+.wish-message.error {
+    background: rgba(255, 68, 68, 0.2);
+    color: #ff4444;
+    border: 1px solid rgba(255, 68, 68, 0.3);
+}
+
+.wish-message.success {
+    background: rgba(68, 255, 68, 0.2);
+    color: #44ff44;
+    border: 1px solid rgba(68, 255, 68, 0.3);
+}
+
+/* 愿望画廊网格 */
+.wish-gallery {
+    display: grid;
+    gap: var(--spacing-3);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    min-height: 100px;
+}
+
+/* 愿望空状态 */
+.wish-empty-state {
+    text-align: center;
+    padding: var(--spacing-8) var(--spacing-4);
+    color: var(--color-silver-white-dim);
+    font-style: italic;
+}
+
+/* 愿望统计 */
+.wish-stats {
+    text-align: center;
+    margin: var(--spacing-2) 0;
+}
+
+.wish-stats .badge {
+    background: var(--color-radiant-gold);
+    color: var(--color-midnight-blue-dark);
+    padding: var(--spacing-2) var(--spacing-3);
+    border-radius: var(--border-radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+}
+
+/* 快捷操作区域 */
+.quick-actions-container {
+    display: flex;
+    gap: var(--spacing-3);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* 表单操作区域 */
+.form-actions {
+    display: flex;
+    gap: var(--spacing-3);
+    flex-wrap: wrap;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+/* 愿望预览动画 */
+.wish-preview-enter {
+    animation: wishPreviewEnter 0.5s var(--ease-out) forwards;
+}
+
+@keyframes wishPreviewEnter {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* 愿望卡片进入动画增强 */
+.wish-card-enter {
+    animation: wishCardEnter 0.5s var(--ease-out) forwards;
+}
+
+@keyframes wishCardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 愿望统计网格 */
+.wish-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-2);
+    margin: var(--spacing-3) 0;
+}
+
+.wish-stat-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: var(--spacing-2);
+    border-radius: var(--border-radius-md);
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.wish-stat-value {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-radiant-gold);
+    font-family: var(--font-family-mono);
+}
+
+.wish-stat-label {
+    font-size: var(--font-size-xs);
+    color: var(--color-silver-white-dim);
+    margin-top: var(--spacing-1);
+}
+
+/* 愿望状态指示器 */
+.wish-status-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: var(--spacing-1);
+    vertical-align: middle;
+}
+
+.wish-status-indicator.active {
+    background: var(--color-success);
+    box-shadow: 0 0 8px var(--color-success);
+}
+
+.wish-status-indicator.inactive {
+    background: var(--color-silver-white-dim);
+}
+
+/* 愿望导出/导入模态框 */
+.wish-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    backdrop-filter: blur(5px);
+}
+
+.wish-modal-content {
+    background: var(--color-midnight-blue);
+    padding: var(--spacing-6);
+    border-radius: var(--border-radius-xl);
+    border: 2px solid var(--color-radiant-gold);
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.wish-modal-title {
+    font-size: var(--font-size-2xl);
+    color: var(--color-radiant-gold);
+    margin-bottom: var(--spacing-4);
+    text-align: center;
+}
+
+.wish-modal-textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: var(--spacing-3);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius-md);
+    color: var(--color-silver-white);
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-sm);
+    resize: vertical;
+}
+
+.wish-modal-actions {
+    display: flex;
+    gap: var(--spacing-3);
+    margin-top: var(--spacing-4);
+    justify-content: flex-end;
+}
+
+/* 移动端优化 */
+@media (max-width: 768px) {
+    #particle-canvas {
+        opacity: 0.5; /* 移动端降低透明度以提升性能 */
+    }
+    
+    .wish-form {
+        padding: var(--spacing-3);
+    }
+    
+    .wish-gallery {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-2);
+    }
+    
+    .wish-modal-content {
+        padding: var(--spacing-4);
+        width: 95%;
+    }
+    
+    .wish-modal-actions {
+        flex-direction: column;
+    }
+    
+    .wish-modal-actions .btn-secondary,
+    .wish-modal-actions .btn-primary {
+        width: 100%;
+    }
+}
+
+/* 平板设备优化 */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .wish-gallery {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+/* 大屏幕优化 */
+@media (min-width: 1024px) {
+    .wish-gallery {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--spacing-4);
+    }
+}
+
+/* 全局加载指示器 */
+.loading-indicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--color-midnight-blue);
+    color: var(--color-radiant-gold);
+    padding: var(--spacing-4) var(--spacing-6);
+    border-radius: var(--border-radius-lg);
+    border: 2px solid var(--color-radiant-gold);
+    z-index: 10001;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.loading-indicator .loading-spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid var(--color-radiant-gold);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: rotate 0.8s linear infinite;
+}
+
+.loading-indicator .loading-text {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-lg);
+}
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+    .wish-card-enter,
+    .wish-preview-enter,
+    .wish-message {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+    
+    .wish-submit-btn.loading::after,
+    .btn-ghost.loading::after,
+    #share-btn.loading::after,
+    .loading-indicator .loading-spinner {
+        animation: none;
+        border-top-color: var(--color-radiant-gold);
+    }
+}

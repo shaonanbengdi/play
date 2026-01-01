@@ -1,0 +1,526 @@
+/* 
+ * CSS动画系统
+ * 使用CSS变量和现代缓动函数
+ */
+
+/* 
+ * 基础关键帧动画
+ */
+
+/* 淡入动画 - 从下方滑入并淡入 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 脉冲动画 - 缩放和透明度变化 */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+/* 滑入动画 - 从下方滑入，带缩放 */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 闪烁动画 - 透明度周期性变化 */
+@keyframes flash {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+/* 弹跳动画 - 垂直弹跳效果 */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    25% {
+        transform: translateY(-12px);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+    75% {
+        transform: translateY(-8px);
+    }
+}
+
+/* 旋转动画 - 360度旋转 */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 滑入动画 - 从左侧滑入 */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 滑入动画 - 从右侧滑入 */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 弹性动画 - 带有弹性效果的进入 */
+@keyframes elasticIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) rotate(-10deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1) rotate(5deg);
+    }
+    70% {
+        transform: scale(0.95) rotate(-2deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* 震动动画 - 错误反馈 */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* 高亮动画 - 金色光芒闪烁 */
+@keyframes highlightGlow {
+    0%, 100% {
+        box-shadow: 0 0 5px var(--color-radiant-gold);
+    }
+    50% {
+        box-shadow: 0 0 20px var(--color-radiant-gold), 0 0 30px var(--color-accent-glow);
+    }
+}
+
+/* 
+ * 特殊用途动画
+ */
+
+/* 倒计时脉冲 - 数字高亮效果 */
+@keyframes countdownPulse {
+    0% {
+        transform: scale(1);
+        text-shadow: 0 0 10px var(--color-radiant-gold);
+    }
+    30% {
+        transform: scale(1.15);
+        text-shadow: 0 0 25px var(--color-radiant-gold), 0 0 35px var(--color-radiant-gold);
+    }
+    60% {
+        transform: scale(1.05);
+        text-shadow: 0 0 15px var(--color-accent-glow);
+    }
+    100% {
+        transform: scale(1);
+        text-shadow: 0 0 10px var(--color-radiant-gold);
+    }
+}
+
+/* 粒子爆炸 - 用于愿望提交 */
+@keyframes particleBurst {
+    0% {
+        transform: scale(0) rotate(0deg) translateY(0);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2) rotate(90deg) translateY(-10px);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1.5) rotate(180deg) translateY(-20px);
+        opacity: 0;
+    }
+}
+
+/* 愿望卡片进入 - 弹性效果 */
+@keyframes wishCardEnter {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.8) rotate(-2deg);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(-5px) scale(1.05) rotate(1deg);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotate(0deg);
+    }
+}
+
+/* 按钮波纹效果 */
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* 
+ * 动画应用类
+ */
+
+/* 基础入场动画 */
+.animate-fade-in {
+    animation: fadeIn var(--transition-slow) var(--ease-out) forwards;
+}
+
+.animate-slide-up {
+    animation: slideUp var(--transition-base) var(--ease-out) forwards;
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft var(--transition-base) var(--ease-out) forwards;
+}
+
+.animate-slide-in-right {
+    animation: slideInRight var(--transition-base) var(--ease-out) forwards;
+}
+
+/* 交互反馈动画 */
+.animate-pulse {
+    animation: pulse var(--transition-slow) var(--ease-in-out) infinite;
+}
+
+.animate-bounce {
+    animation: bounce var(--transition-slow) var(--ease-in-out) infinite;
+}
+
+.animate-flash {
+    animation: flash var(--transition-base) var(--ease-in-out) 2;
+}
+
+.animate-rotate {
+    animation: rotate 1.5s var(--ease-linear) infinite;
+}
+
+/* 特殊动画类 */
+.countdown-highlight {
+    animation: countdownPulse 1.2s var(--ease-spring);
+}
+
+.particle-burst {
+    animation: particleBurst 0.8s var(--ease-out) forwards;
+}
+
+.wish-card-enter {
+    animation: wishCardEnter 0.6s var(--ease-spring) forwards;
+}
+
+.elastic-in {
+    animation: elasticIn 0.8s var(--ease-spring) forwards;
+}
+
+.shake {
+    animation: shake 0.5s var(--ease-out);
+}
+
+.highlight-glow {
+    animation: highlightGlow 1.5s var(--ease-in-out) 2;
+}
+
+/* 
+ * 延迟动画类
+ */
+.delay-50 { animation-delay: 0.05s; }
+.delay-100 { animation-delay: 0.1s; }
+.delay-150 { animation-delay: 0.15s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-250 { animation-delay: 0.25s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+.delay-700 { animation-delay: 0.7s; }
+.delay-800 { animation-delay: 0.8s; }
+
+/* 
+ * 过渡效果类
+ */
+.transition-all {
+    transition: all var(--transition-base) var(--ease-out);
+}
+
+.transition-color {
+    transition: color var(--transition-base) var(--ease-out);
+}
+
+.transition-transform {
+    transition: transform var(--transition-base) var(--ease-out);
+}
+
+.transition-opacity {
+    transition: opacity var(--transition-base) var(--ease-out);
+}
+
+.transition-background {
+    transition: background-color var(--transition-base) var(--ease-out);
+}
+
+.transition-box-shadow {
+    transition: box-shadow var(--transition-base) var(--ease-out);
+}
+
+/* 
+ * 悬停效果类
+ */
+.hover-lift:hover {
+    transform: translateY(-3px);
+    transition: transform var(--transition-fast) var(--ease-out);
+}
+
+.hover-glow:hover {
+    box-shadow: 0 0 25px var(--color-accent-glow);
+    transition: box-shadow var(--transition-base) var(--ease-out);
+}
+
+.hover-scale:hover {
+    transform: scale(1.02);
+    transition: transform var(--transition-fast) var(--ease-out);
+}
+
+/* 
+ * 状态动画类
+ */
+.loading {
+    animation: pulse var(--transition-slow) var(--ease-in-out) infinite;
+}
+
+.success-pulse {
+    animation: pulse 0.6s var(--ease-spring) 2;
+}
+
+.error-shake {
+    animation: shake 0.5s var(--ease-out);
+}
+
+/* 
+ * 组合动画类
+ */
+.animate-in {
+    animation: fadeIn var(--transition-slow) var(--ease-out) forwards,
+               slideUp var(--transition-slow) var(--ease-out) forwards;
+}
+
+/* 
+ * 视觉反馈动画
+ */
+@keyframes buttonPress {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+}
+
+.button-press {
+    animation: buttonPress 0.2s var(--ease-out);
+}
+
+/* 
+ * 文本动画
+ */
+@keyframes textGlow {
+    0%, 100% {
+        text-shadow: 0 0 5px var(--color-radiant-gold);
+    }
+    50% {
+        text-shadow: 0 0 15px var(--color-radiant-gold), 0 0 25px var(--color-accent-glow);
+    }
+}
+
+.text-glow {
+    animation: textGlow 2s var(--ease-in-out) infinite;
+}
+
+/* 
+ * 布局动画
+ */
+@keyframes expandHeight {
+    from {
+        max-height: 0;
+        opacity: 0;
+    }
+    to {
+        max-height: 1000px;
+        opacity: 1;
+    }
+}
+
+.expand-height {
+    animation: expandHeight var(--transition-slow) var(--ease-out) forwards;
+}
+
+/* 
+ * 粒子动画辅助类
+ */
+.particle-fade-out {
+    animation: fadeOut 0.8s var(--ease-out) forwards;
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-20px); }
+}
+
+/* 
+ * 响应式动画调整
+ */
+@media (prefers-reduced-motion: reduce) {
+    /* 禁用所有动画 */
+    .animate-fade-in,
+    .animate-slide-up,
+    .animate-pulse,
+    .animate-bounce,
+    .animate-flash,
+    .animate-rotate,
+    .countdown-highlight,
+    .particle-burst,
+    .wish-card-enter,
+    .elastic-in,
+    .shake,
+    .highlight-glow,
+    .loading,
+    .success-pulse,
+    .error-shake,
+    .animate-in,
+    .button-press,
+    .text-glow,
+    .expand-height,
+    .particle-fade-out {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/*
+ * 高性能动画
+ * 使用 transform 和 opacity，避免重排
+ */
+ .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+/* 应用于关键动画元素 - 强制GPU加速 */
+.countdown-display .time-unit,
+.wish-card,
+.wish-submit-btn,
+.btn-ghost,
+#share-btn {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* 减少动画偏好下的优化 */
+@media (prefers-reduced-motion: reduce) {
+    .countdown-display .time-unit,
+    .wish-card,
+    .wish-submit-btn,
+    .btn-ghost,
+    #share-btn {
+        will-change: auto;
+        transform: none;
+    }
+}
+
+/* 
+ * 动画序列类
+ */
+.animate-sequence > * {
+    opacity: 0;
+}
+
+.animate-sequence > *:nth-child(1) { animation: fadeIn 0.4s var(--ease-out) 0.1s forwards; }
+.animate-sequence > *:nth-child(2) { animation: fadeIn 0.4s var(--ease-out) 0.2s forwards; }
+.animate-sequence > *:nth-child(3) { animation: fadeIn 0.4s var(--ease-out) 0.3s forwards; }
+.animate-sequence > *:nth-child(4) { animation: fadeIn 0.4s var(--ease-out) 0.4s forwards; }
+.animate-sequence > *:nth-child(5) { animation: fadeIn 0.4s var(--ease-out) 0.5s forwards; }
+
+/* 
+ * 闪烁强调动画 - 用于重要通知
+ */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.blink {
+    animation: blink 1s var(--ease-in-out) 3;
+}
+
+/* 
+ * 波纹效果 - 点击反馈
+ */
+.ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.ripple::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.ripple:active::after {
+    width: 300px;
+    height: 300px;
+}

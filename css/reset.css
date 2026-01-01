@@ -1,0 +1,384 @@
+/*
+ * 现代CSS重置系统
+ * 基于Andy Bell的现代CSS重置，增强跨浏览器兼容性
+ */
+
+/*
+ * 1. 使用border-box模型，更直观的尺寸计算
+ * 2. 移除默认边距，提供一致的起点
+ * 3. 提升元素可访问性
+ */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * 1. 移除默认动画，尊重用户偏好
+ * 2. 平滑滚动，提升用户体验
+ * 3. 渲染优化
+ */
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+/*
+ * 基础字体和排版设置
+ */
+html {
+    /* 修复浏览器默认字体大小差异 */
+    font-size: 100%;
+    /* 基础行高 */
+    line-height: var(--line-height-base);
+    /* 字体渲染优化 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* 文本渲染优化 */
+    text-rendering: optimizeLegibility;
+}
+
+/*
+ * 页面基础样式
+ */
+body {
+    font-family: var(--font-family-primary);
+    background-color: var(--color-midnight-blue);
+    color: var(--color-silver-white);
+    min-height: 100vh;
+    overflow-x: hidden;
+    /* 防止滚动跳动 */
+    overflow-y: overlay;
+}
+
+/*
+ * 媒体元素重置
+ * 确保媒体元素响应式且不溢出容器
+ */
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/*
+ * 表单元素重置
+ * 保持字体和颜色一致性，移除默认样式
+ */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+/*
+ * 按钮元素重置
+ */
+button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    /* 移除按钮在不同浏览器中的默认样式 */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/*
+ * 链接重置
+ * 确保键盘导航和屏幕阅读器支持
+ */
+a {
+    color: inherit;
+    text-decoration: none;
+    background-color: transparent;
+    transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+a:hover {
+    color: var(--color-radiant-gold);
+    text-decoration: underline;
+}
+
+a:focus-visible {
+    outline: 2px solid var(--color-accent-glow);
+    outline-offset: 2px;
+    text-decoration: none;
+}
+
+a:active {
+    color: var(--color-radiant-gold-dark);
+}
+
+/* 确保访问过的链接样式一致 */
+a:visited {
+    color: inherit;
+}
+
+/*
+ * 键盘导航增强
+ * 确保所有可点击元素都支持键盘访问
+ */
+button,
+a,
+input,
+textarea,
+select {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 确保所有交互元素都能通过键盘聚焦 */
+*:focus {
+    outline: none;
+}
+
+*:focus-visible {
+    outline: 2px solid var(--color-accent-glow);
+    outline-offset: 2px;
+}
+
+/*
+ * 列表重置
+ */
+ul,
+ol,
+dl {
+    list-style: none;
+}
+
+/*
+ * 表格重置
+ */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/*
+ * 引用元素重置
+ */
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote::before,
+blockquote::after,
+q::before,
+q::after {
+    content: '';
+    content: none;
+}
+
+/*
+ * 代码元素重置
+ */
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-x: auto;
+}
+
+/*
+ * 可访问性工具类
+ * 视觉隐藏但保持屏幕阅读器可访问
+ */
+.visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+/*
+ * 焦点样式增强
+ * 提供清晰的焦点指示器，符合WCAG标准
+ */
+:focus-visible {
+    outline: 2px solid var(--color-radiant-gold);
+    outline-offset: 2px;
+    transition: outline 0.2s ease;
+}
+
+/* 键盘导航可见性 */
+:focus {
+    outline: 2px solid transparent;
+}
+
+/* 确保焦点样式在所有状态下可见 */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 3px solid var(--color-radiant-gold);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.3);
+}
+
+/* 跳过导航链接增强 */
+.visually-hidden.focusable:focus {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: auto;
+    height: auto;
+    padding: var(--spacing-3) var(--spacing-4);
+    background: var(--color-midnight-blue);
+    color: var(--color-radiant-gold);
+    z-index: 10000;
+    border-radius: var(--border-radius-md);
+    font-weight: bold;
+    outline: 3px solid var(--color-radiant-gold);
+    outline-offset: 2px;
+}
+
+/*
+ * 屏幕阅读器专用文本
+ * 仅对辅助技术可见
+ */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/*
+ * 焦点管理类
+ * 用于强制焦点到特定元素
+ */
+.focus-visible {
+    outline: 2px solid var(--color-radiant-gold);
+    outline-offset: 2px;
+}
+
+/*
+ * 焦点样式重置
+ * 提供清晰的焦点指示器
+ */
+:focus-visible {
+    outline: 2px solid var(--color-radiant-gold);
+    outline-offset: 2px;
+}
+
+/*
+ * 禁用状态样式
+ */
+:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/*
+ * 选择文本样式
+ */
+::selection {
+    background-color: var(--color-radiant-gold);
+    color: var(--color-midnight-blue);
+}
+
+/*
+ * 滚动条样式（Webkit浏览器）
+ */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-midnight-blue-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-radiant-gold);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-radiant-gold-light);
+}
+
+/*
+ * 表单输入占位符样式
+ */
+::placeholder {
+    color: rgba(248, 249, 250, 0.5);
+    opacity: 1;
+}
+
+/*
+ * 移除表单元素的默认验证样式
+ */
+input:invalid,
+textarea:invalid {
+    box-shadow: none;
+}
+
+input:valid,
+textarea:valid {
+    box-shadow: none;
+}
+
+/*
+ * 防止长文本溢出
+ */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+}
+
+/*
+ * 修复某些浏览器中的图片默认间隙
+ */
+picture {
+    font-size: 0;
+}
+
+/*
+ * 防止SVG在IE中的默认样式
+ */
+svg {
+    overflow: visible;
+}
+
+/*
+ * 修复移动端滚动锁定问题
+ */
+body.modal-open {
+    overflow: hidden;
+    touch-action: none;
+}

@@ -1,0 +1,1056 @@
+/*
+ * 响应式设计系统 - 媒体查询
+ * 移动优先，逐步增强的响应式策略
+ */
+
+/*
+ * 基础断点定义
+ * xs: < 480px (超小屏幕)
+ * sm: 480px - 767px (小屏幕)
+ * md: 768px - 1023px (中等屏幕/平板竖屏)
+ * lg: 1024px - 1279px (大屏幕/平板横屏)
+ * xl: 1280px - 1535px (超大屏幕/桌面)
+ * 2xl: >= 1536px (特大屏幕)
+ */
+
+/*
+ * 超小屏幕设备 (xs) - < 480px
+ * 主要针对老式手机和小屏幕设备
+ */
+@media (max-width: 479px) {
+    /* Header调整 */
+    .header {
+        padding: var(--spacing-3) var(--spacing-2);
+    }
+    
+    .header .title {
+        font-size: var(--font-size-2xl);
+        letter-spacing: 0.5px;
+    }
+    
+    .header .subtitle {
+        font-size: var(--font-size-sm);
+    }
+    
+    /* Main内容区域 */
+    .main {
+        padding: var(--spacing-2);
+        gap: var(--spacing-3);
+    }
+    
+    /* 倒计时区域 - 垂直堆叠 */
+    .countdown-display {
+        flex-direction: column;
+        gap: var(--spacing-2);
+        width: 100%;
+    }
+    
+    .time-unit {
+        width: 100%;
+        min-width: unset;
+        padding: var(--spacing-3);
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .time-unit .value {
+        font-size: var(--font-size-lg); /* 从 xl 降级到 lg */
+    }
+    
+    .time-unit .label {
+        font-size: var(--font-size-xs);
+    }
+    
+    /* 许愿区域 */
+    .wish-section {
+        padding: 0;
+        gap: var(--spacing-3);
+    }
+    
+    .wish-section h2 {
+        font-size: var(--font-size-lg);
+    }
+    
+    .wish-input {
+        min-height: 50px; /* 从 60px 优化到 50px */
+        font-size: var(--font-size-sm);
+        padding: var(--spacing-3);
+    }
+    
+    /* 确保触摸目标最小尺寸 */
+    .wish-submit-btn {
+        min-height: 44px;
+        padding: var(--spacing-2) var(--spacing-3);
+    }
+    
+    .wish-submit-btn {
+        padding: var(--spacing-3) var(--spacing-4);
+        font-size: var(--font-size-base);
+    }
+    
+    .wish-help-text {
+        font-size: var(--font-size-xs);
+    }
+    
+    /* 愿望画廊 */
+    .wish-gallery {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-2);
+    }
+    
+    /* 愿望卡片 */
+    .wish-card {
+        padding: var(--spacing-3);
+    }
+    
+    .wish-card .wish-text {
+        font-size: var(--font-size-base);
+    }
+    
+    .wish-card .wish-timestamp {
+        font-size: var(--font-size-xs);
+    }
+    
+    /* Footer */
+    .footer {
+        font-size: var(--font-size-xs);
+        padding: var(--spacing-3);
+    }
+    
+    /* 状态消息 */
+    .status-message {
+        font-size: var(--font-size-sm);
+        padding: var(--spacing-2) var(--spacing-3);
+    }
+}
+
+/*
+ * 小屏幕设备 (sm) - 480px - 767px
+ * 主要针对手机竖屏
+ */
+@media (min-width: 480px) and (max-width: 767px) {
+    /* Header调整 */
+    .header {
+        padding: var(--spacing-4) var(--spacing-3);
+    }
+    
+    .header .title {
+        font-size: var(--font-size-3xl);
+    }
+    
+    .header .subtitle {
+        font-size: var(--font-size-base);
+    }
+    
+    /* Main内容区域 */
+    .main {
+        padding: var(--spacing-3);
+        gap: var(--spacing-4);
+    }
+    
+    /* 倒计时区域 */
+    .countdown-display {
+        gap: var(--spacing-3);
+    }
+    
+    .time-unit {
+        min-width: 75px;
+        padding: var(--spacing-3);
+    }
+    
+    .time-unit .value {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .time-unit .label {
+        font-size: var(--font-size-sm);
+    }
+    
+    /* 许愿区域 */
+    .wish-section {
+        gap: var(--spacing-4);
+    }
+    
+    .wish-section h2 {
+        font-size: var(--font-size-xl);
+    }
+    
+    .wish-input {
+        min-height: 80px;
+        font-size: var(--font-size-base);
+        padding: var(--spacing-3);
+    }
+    
+    .wish-submit-btn {
+        padding: var(--spacing-3) var(--spacing-5);
+        font-size: var(--font-size-lg);
+    }
+    
+    /* 愿望画廊 */
+    .wish-gallery {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-3);
+    }
+    
+    /* 愿望卡片 */
+    .wish-card {
+        padding: var(--spacing-3);
+    }
+    
+    .wish-card .wish-text {
+        font-size: var(--font-size-lg);
+    }
+}
+
+/*
+ * 中等屏幕设备 (md) - 768px - 1023px
+ * 平板竖屏和大屏手机
+ */
+@media (min-width: 768px) and (max-width: 1023px) {
+    /* Header调整 */
+    .header {
+        padding: var(--spacing-6) var(--spacing-4);
+    }
+    
+    .header .title {
+        font-size: var(--font-size-4xl);
+    }
+    
+    .header .subtitle {
+        font-size: var(--font-size-lg);
+    }
+    
+    /* Main内容区域 */
+    .main {
+        padding: var(--spacing-4);
+        gap: var(--spacing-5);
+    }
+    
+    /* 倒计时区域 */
+    .countdown-display {
+        gap: var(--spacing-4);
+    }
+    
+    .time-unit {
+        min-width: 90px;
+        padding: var(--spacing-4);
+    }
+    
+    .time-unit .value {
+        font-size: var(--font-size-3xl);
+    }
+    
+    .time-unit .label {
+        font-size: var(--font-size-base);
+    }
+    
+    /* 许愿区域 */
+    .wish-section {
+        gap: var(--spacing-5);
+        max-width: 550px;
+    }
+    
+    .wish-section h2 {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .wish-input {
+        min-height: 100px;
+        font-size: var(--font-size-lg);
+        padding: var(--spacing-4);
+    }
+    
+    .wish-submit-btn {
+        padding: var(--spacing-4) var(--spacing-6);
+        font-size: var(--font-size-lg);
+    }
+    
+    /* 愿望画廊 */
+    .wish-gallery {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--spacing-4);
+    }
+    
+    /* 愿望卡片 */
+    .wish-card {
+        padding: var(--spacing-4);
+    }
+    
+    .wish-card .wish-text {
+        font-size: var(--font-size-xl);
+    }
+    
+    /* Footer */
+    .footer {
+        font-size: var(--font-size-base);
+        padding: var(--spacing-4);
+    }
+}
+
+/*
+ * 大屏幕设备 (lg) - 1024px - 1279px
+ * 平板横屏和小桌面
+ */
+@media (min-width: 1024px) and (max-width: 1279px) {
+    /* Header调整 */
+    .header {
+        padding: var(--spacing-8) var(--spacing-6);
+    }
+    
+    .header .title {
+        font-size: var(--font-size-5xl);
+    }
+    
+    .header .subtitle {
+        font-size: var(--font-size-xl);
+    }
+    
+    /* Main内容区域 - 双栏布局 */
+    .main {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
+        gap: var(--spacing-6);
+        padding: var(--spacing-5);
+    }
+    
+    /* 倒计时区域 */
+    .countdown-section {
+        flex: 1;
+        min-height: 280px;
+        order: 1;
+    }
+    
+    .countdown-display {
+        gap: var(--spacing-5);
+    }
+    
+    .time-unit {
+        min-width: 110px;
+        padding: var(--spacing-5);
+    }
+    
+    .time-unit .value {
+        font-size: var(--font-size-4xl);
+    }
+    
+    .time-unit .label {
+        font-size: var(--font-size-lg);
+    }
+    
+    /* 许愿区域 */
+    .wish-section {
+        flex: 1;
+        max-width: 500px;
+        order: 2;
+        margin: 0;
+        gap: var(--spacing-5);
+    }
+    
+    .wish-section h2 {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .wish-input {
+        min-height: 120px;
+        font-size: var(--font-size-lg);
+    }
+    
+    .wish-submit-btn {
+        padding: var(--spacing-4) var(--spacing-6);
+        font-size: var(--font-size-xl);
+    }
+    
+    /* 愿望画廊 */
+    .wish-gallery {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: var(--spacing-5);
+        order: 3;
+        width: 100%;
+    }
+    
+    /* 愿望卡片 */
+    .wish-card .wish-text {
+        font-size: var(--font-size-xl);
+    }
+}
+
+/*
+ * 超大屏幕设备 (xl) - 1280px - 1535px
+ * 桌面显示器
+ */
+@media (min-width: 1280px) and (max-width: 1535px) {
+    .container {
+        max-width: var(--container-max-width-wide);
+    }
+    
+    /* Header调整 */
+    .header {
+        padding: var(--spacing-10) var(--spacing-8);
+    }
+    
+    .header .title {
+        font-size: var(--font-size-6xl);
+        letter-spacing: 2px;
+    }
+    
+    .header .subtitle {
+        font-size: var(--font-size-2xl);
+    }
+    
+    /* Main内容区域 */
+    .main {
+        gap: var(--spacing-8);
+        padding: var(--spacing-6);
+    }
+    
+    /* 倒计时区域 */
+    .countdown-section {
+        min-height: 320px;
+    }
+    
+    .countdown-display {
+        gap: var(--spacing-6);
+    }
+    
+    .time-unit {
+        min-width: 130px;
+        padding: var(--spacing-6);
+    }
+    
+    .time-unit .value {
+        font-size: var(--font-size-5xl);
+    }
+    
+    .time-unit .label {
+        font-size: var(--font-size-xl);
+    }
+    
+    /* 许愿区域 */
+    .wish-section {
+        max-width: 550px;
+    }
+    
+    .wish-section h2 {
+        font-size: var(--font-size-3xl);
+    }
+    
+    .wish-input {
+        min-height: 140px;
+        font-size: var(--font-size-xl);
+    }
+    
+    .wish-submit-btn {
+        padding: var(--spacing-5) var(--spacing-8);
+        font-size: var(--font-size-2xl);
+    }
+    
+    /* 愿望画廊 */
+    .wish-gallery {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: var(--spacing-6);
+    }
+    
+    /* 愿望卡片 */
+    .wish-card {
+        padding: var(--spacing-5);
+    }
+    
+    .wish-card .wish-text {
+        font-size: var(--font-size-2xl);
+    }
+    
+    /* Footer */
+    .footer {
+        font-size: var(--font-size-lg);
+        padding: var(--spacing-6);
+    }
+}
+
+/*
+ * 特大屏幕设备 (2xl) - 1536px+
+ * 大桌面显示器和4K屏幕
+ */
+@media (min-width: 1536px) {
+    .container {
+        max-width: 1600px;
+    }
+    
+    /* Header调整 */
+    .header {
+        padding: var(--spacing-12) var(--spacing-10);
+    }
+    
+    .header .title {
+        font-size: 7rem;
+        letter-spacing: 3px;
+    }
+    
+    .header .subtitle {
+        font-size: var(--font-size-3xl);
+    }
+    
+    /* Main内容区域 */
+    .main {
+        gap: var(--spacing-10);
+        padding: var(--spacing-8);
+        max-width: 1600px;
+    }
+    
+    /* 倒计时区域 */
+    .countdown-display {
+        gap: var(--spacing-8);
+    }
+    
+    .time-unit {
+        min-width: 150px;
+        padding: var(--spacing-8);
+    }
+    
+    .time-unit .value {
+        font-size: 6rem;
+    }
+    
+    .time-unit .label {
+        font-size: var(--font-size-2xl);
+    }
+    
+    /* 许愿区域 */
+    .wish-section {
+        max-width: 650px;
+    }
+    
+    .wish-section h2 {
+        font-size: var(--font-size-4xl);
+    }
+    
+    .wish-input {
+        min-height: 160px;
+        font-size: var(--font-size-2xl);
+        padding: var(--spacing-6);
+    }
+    
+    .wish-submit-btn {
+        padding: var(--spacing-6) var(--spacing-10);
+        font-size: var(--font-size-3xl);
+    }
+    
+    /* 愿望画廊 */
+    .wish-gallery {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: var(--spacing-8);
+    }
+    
+    /* 愿望卡片 */
+    .wish-card {
+        padding: var(--spacing-6);
+    }
+    
+    .wish-card .wish-text {
+        font-size: var(--font-size-3xl);
+    }
+    
+    /* Footer */
+    .footer {
+        font-size: var(--font-size-xl);
+        padding: var(--spacing-8);
+    }
+}
+
+/*
+ * 高DPI屏幕优化 (Retina显示器)
+ * 改善字体渲染和图像清晰度
+ */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .header .title,
+    .time-unit .value,
+    .wish-card .wish-text {
+        text-rendering: optimizeLegibility;
+    }
+    
+    /* 增强高DPI屏幕下的边框和阴影 */
+    .time-unit,
+    .wish-card,
+    .wish-submit-btn {
+        image-rendering: -webkit-optimize-contrast;
+    }
+}
+
+/*
+ * 横屏模式优化
+ * 针对手机横屏和小高度屏幕的特殊处理
+ */
+@media (orientation: landscape) and (max-height: 600px) {
+    /* 优化布局，保留核心功能 */
+    .main {
+        gap: var(--spacing-2);
+        padding: var(--spacing-2);
+        flex-direction: row; /* 改为横向布局 */
+        flex-wrap: nowrap;
+    }
+    
+    .header {
+        padding: var(--spacing-2);
+    }
+    
+    .header .title {
+        font-size: var(--font-size-xl);
+    }
+    
+    .header .subtitle {
+        display: none; /* 隐藏副标题节省空间 */
+    }
+    
+    /* 倒计时区域 - 横向布局 */
+    .countdown-section {
+        flex: 1;
+        min-height: 120px;
+        padding: var(--spacing-2);
+        order: 1;
+    }
+    
+    .countdown-display {
+        gap: var(--spacing-2);
+    }
+    
+    .time-unit {
+        min-width: 60px;
+        padding: var(--spacing-2);
+    }
+    
+    .time-unit .value {
+        font-size: var(--font-size-lg); /* 适当缩小 */
+    }
+    
+    .time-unit .label {
+        font-size: var(--font-size-xs);
+    }
+    
+    /* 愿望区域 - 保持显示但优化 */
+    .wish-section {
+        flex: 1;
+        max-width: 350px;
+        order: 2;
+        display: flex !important; /* 保持显示 */
+        flex-direction: column;
+        gap: var(--spacing-2);
+        padding: 0;
+    }
+    
+    .wish-section h2 {
+        font-size: var(--font-size-lg);
+        margin-bottom: var(--spacing-1);
+    }
+    
+    .wish-input {
+        min-height: 40px; /* 进一步减小高度 */
+        font-size: var(--font-size-sm);
+        padding: var(--spacing-2);
+    }
+    
+    .wish-submit-btn {
+        padding: var(--spacing-2) var(--spacing-3);
+        font-size: var(--font-size-base);
+    }
+    
+    .wish-help-text {
+        font-size: var(--font-size-xs);
+    }
+    
+    /* 页脚隐藏 */
+    .footer {
+        display: none;
+    }
+}
+
+/*
+ * 暗色模式支持
+ * 响应系统级暗色模式偏好
+ */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-dark-overlay: rgba(10, 26, 58, 0.92);
+        --color-dark-overlay-light: rgba(10, 26, 58, 0.8);
+    }
+    
+    /* 增强卡片在暗色模式下的对比度 */
+    .wish-card {
+        background: linear-gradient(135deg, #e8d5b7, #d4c0a0);
+        border-color: #b89f7a;
+    }
+    
+    .wish-card .wish-text {
+        color: #2c2416;
+    }
+    
+    .wish-card .wish-timestamp {
+        color: #5a4a32;
+    }
+    
+    /* 表单在暗色模式下的增强 */
+    .wish-input {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 215, 0, 0.4);
+    }
+    
+    .wish-input:focus {
+        background: rgba(255, 255, 255, 0.18);
+    }
+}
+
+/*
+ * 减少动画偏好
+ * 尊重用户对减少动画的系统设置
+ */
+@media (prefers-reduced-motion: reduce) {
+    /* 禁用所有动画 */
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    /* 禁用特定动画类 */
+    .countdown-highlight,
+    .animate-pulse,
+    .animate-bounce,
+    .animate-fade-in,
+    .animate-slide-up,
+    .animate-flash,
+    .animate-rotate,
+    .particle-burst,
+    .highlight-flash {
+        animation: none !important;
+    }
+    
+    /* 简化悬停效果 */
+    .time-unit:hover,
+    .wish-card:hover,
+    .wish-submit-btn:hover {
+        transform: none !important;
+    }
+    
+    /* 禁用粒子画布 */
+    #particle-canvas {
+        display: none !important;
+    }
+}
+
+/*
+ * 触摸设备优化
+ * 针对触摸屏设备的特殊处理
+ */
+@media (hover: none) and (pointer: coarse) {
+    /* 增大触摸目标 */
+    .wish-submit-btn {
+        min-height: 48px;
+        padding: var(--spacing-4) var(--spacing-6);
+    }
+    
+    .wish-input {
+        min-height: 100px;
+    }
+    
+    /* 简化悬停效果 */
+    .wish-submit-btn:hover,
+    .time-unit:hover,
+    .wish-card:hover {
+        transform: none;
+    }
+    
+    /* 确保所有交互元素至少44px */
+    button, .btn-primary, .btn-secondary, .btn-ghost,
+    .wish-submit-btn, .wish-delete-btn {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .wish-submit-btn:active {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+    
+    /* 删除按钮触摸优化 */
+    .wish-delete-btn:active {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+}
+
+/*
+ * 高对比度模式支持
+ * 为需要高对比度的用户提供更好的可访问性
+ */
+@media (prefers-contrast: high) {
+    :root {
+        --color-radiant-gold: #ffeb3b;
+        --color-silver-white: #ffffff;
+        --color-midnight-blue: #000000;
+    }
+    
+    .time-unit,
+    .wish-card,
+    .wish-submit-btn {
+        border-width: 3px;
+    }
+    
+    .wish-input {
+        border-width: 3px;
+    }
+    
+    /* 增强焦点指示器 */
+    :focus-visible {
+        outline-width: 3px;
+        outline-offset: 3px;
+    }
+}
+
+/*
+ * 打印样式优化
+ * 确保打印输出的可读性和实用性
+ */
+@media print {
+    /* 基础打印样式 */
+    body {
+        background: white !important;
+        color: black !important;
+        font-size: 12pt;
+    }
+    
+    /* 隐藏不需要打印的元素 */
+    #particle-canvas,
+    .wish-form,
+    .footer,
+    .wish-submit-btn,
+    .status-message,
+    .badge,
+    .divider {
+        display: none !important;
+    }
+    
+    /* 简化布局 */
+    .main {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0;
+    }
+    
+    /* 增强倒计时显示 */
+    .countdown-section {
+        page-break-inside: avoid;
+        border: 2px solid black;
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+    
+    .countdown-display {
+        gap: 0.5rem;
+    }
+    
+    .time-unit {
+        background: white !important;
+        border: 1px solid black;
+        color: black !important;
+        min-width: 60px;
+    }
+    
+    .time-unit .value {
+        color: black !important;
+        text-shadow: none !important;
+        font-size: 24pt;
+    }
+    
+    .time-unit .label {
+        color: black !important;
+    }
+    
+    /* 愿望画廊打印 */
+    .wish-gallery {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    
+    .wish-card {
+        background: white !important;
+        border: 1px solid black;
+        color: black !important;
+        page-break-inside: avoid;
+        padding: 0.5rem;
+    }
+    
+    .wish-card .wish-text {
+        color: black !important;
+        font-size: 11pt;
+    }
+    
+    .wish-card .wish-timestamp {
+        color: #666 !important;
+    }
+    
+    /* 头部打印 */
+    .header {
+        padding: 0.5rem;
+        border-bottom: 2px solid black;
+        margin-bottom: 1rem;
+    }
+    
+    .header .title {
+        color: black !important;
+        text-shadow: none !important;
+        font-size: 18pt;
+    }
+    
+    .header .subtitle {
+        color: black !important;
+    }
+    
+    /* 链接打印 */
+    a::after {
+        content: " (" attr(href) ")";
+        font-size: 9pt;
+    }
+    
+    /* 页面设置 */
+    @page {
+        margin: 2cm;
+        size: A4;
+    }
+}
+
+/*
+ * 低带宽模式检测
+ * 为网络条件不佳的用户提供简化体验
+ */
+@media (prefers-reduced-data: reduce) {
+    /* 禁用粒子效果 */
+    #particle-canvas {
+        display: none !important;
+    }
+    
+    /* 简化动画 */
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    /* 简化阴影 */
+    .time-unit,
+    .wish-card,
+    .wish-submit-btn {
+        box-shadow: none !important;
+    }
+}
+
+/*
+ * 专注模式支持
+ * 为需要减少干扰的用户提供简化界面
+ */
+@media (prefers-reduced-transparency: reduce) {
+    .wish-card,
+    .wish-input,
+    .time-unit {
+        background: var(--color-midnight-blue-light) !important;
+        backdrop-filter: none !important;
+    }
+    
+    .glass {
+        background: var(--color-midnight-blue-light) !important;
+        backdrop-filter: none !important;
+    }
+}
+
+/*
+ * 语义化媒体查询
+ * 基于内容而非设备的响应式设计
+ */
+
+/* 内容宽度适配 */
+@media (min-width: 480px) {
+    .wish-section h2 {
+        text-align: left;
+    }
+}
+
+@media (min-width: 1024px) {
+    .countdown-section {
+        text-align: right;
+    }
+}
+
+/* 导航和交互优化 */
+@media (max-width: 767px) {
+    /* 确保按钮足够大，易于点击 */
+    button,
+    .btn-primary,
+    .btn-secondary,
+    .wish-submit-btn {
+        min-height: 44px;
+    }
+    
+    /* 优化表单输入 */
+    input,
+    textarea,
+    select {
+        min-height: 44px;
+    }
+}
+
+/*
+ * 辅助功能增强
+ * 为辅助技术用户提供更好的体验
+ */
+@media (prefers-reduced-motion: no-preference) {
+    /* 只在支持动画时添加平滑滚动 */
+    html {
+        scroll-behavior: smooth;
+    }
+}
+
+/*
+ * 设备方向变化处理
+ * 确保方向改变时布局正确重排
+ */
+@media (orientation: portrait) {
+    /* 确保在竖屏时显示完整布局 */
+    .wish-section {
+        display: flex !important;
+    }
+}
+
+/*
+ * 屏幕尺寸边界处理
+ * 防止极端尺寸下的布局问题
+ */
+@media (max-width: 319px) {
+    /* 超小屏幕的最后防线 */
+    body {
+        font-size: 14px;
+    }
+    
+    .container {
+        padding: 0 0.5rem;
+    }
+    
+    .header .title {
+        font-size: 1.2rem;
+    }
+}
+
+@media (min-width: 2000px) {
+    /* 超大屏幕的容器限制 */
+    .container {
+        max-width: 1800px;
+    }
+    
+    .main {
+        max-width: 1800px;
+    }
+}

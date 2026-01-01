@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="2026年春节倒计时 - 实时倒计时，粒子动画，许愿功能">
+    <meta name="keywords" content="2026,春节,农历新年,倒计时,粒子动画,许愿">
+    <meta name="author" content="Lunar New Year Countdown 2026">
+    
+    <!-- PWA基础支持 -->
+    <meta name="theme-color" content="#0a1a3a">
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- 预加载关键资源 -->
+    <link rel="preload" href="css/variables.css" as="style">
+    <link rel="preload" href="js/main.js" as="script">
+    
+    <!-- 网站图标 -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    
+    <!-- 样式表 -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/components-additional.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/animations-additional.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <title>2026年春节倒计时 - 许下你的农历新年愿望</title>
+</head>
+<body>
+    <!-- 可访问性实时区域 -->
+    <div id="a11y-announcer" role="status" aria-live="polite" aria-atomic="true" style="position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;"></div>
+    
+    <!-- 粒子画布（全屏叠加） -->
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
+    
+    <!-- 页面头部 -->
+    <header class="header" role="banner">
+        <h1 class="title">2026年春节倒计时</h1>
+        <p class="subtitle">距离农历新年还有...</p>
+        <!-- 状态消息区域 - 动态更新 -->
+        <div id="status-message" class="status-message-container" role="status" aria-live="polite"></div>
+    </header>
+    
+    <!-- 主内容区域 -->
+    <main class="main" role="main">
+        <!-- 倒计时区域 -->
+        <section class="countdown-section" aria-labelledby="countdown-title">
+            <h2 id="countdown-title" class="visually-hidden">倒计时计时器</h2>
+            <div class="countdown-display" id="countdown-display" role="timer" aria-live="polite" aria-atomic="true" aria-label="2026年春节倒计时">
+                <div class="time-unit" role="group" aria-label="天数">
+                    <span class="value" id="days" aria-label="天">00</span>
+                    <span class="label">天</span>
+                </div>
+                <div class="time-unit" role="group" aria-label="小时">
+                    <span class="value" id="hours" aria-label="小时">00</span>
+                    <span class="label">小时</span>
+                </div>
+                <div class="time-unit" role="group" aria-label="分钟">
+                    <span class="value" id="minutes" aria-label="分钟">00</span>
+                    <span class="label">分钟</span>
+                </div>
+                <div class="time-unit" role="group" aria-label="秒">
+                    <span class="value" id="seconds" aria-label="秒">00</span>
+                    <span class="label">秒</span>
+                </div>
+            </div>
+            <!-- 倒计时状态文本 -->
+            <div class="countdown-status-text" id="countdown-status-text" aria-live="polite" aria-atomic="true">
+                正在计算剩余时间...
+            </div>
+        </section>
+        
+        <!-- 许愿区域 -->
+        <section class="wish-section" aria-labelledby="wish-title">
+            <h2 id="wish-title" class="section-title">许下你的新年愿望</h2>
+            
+            <!-- 许愿表单 -->
+            <form class="wish-form" id="wish-form" autocomplete="off" novalidate>
+                <div class="form-group">
+                    <label for="wish-input" class="visually-hidden">新年愿望输入框</label>
+                    <textarea
+                        class="wish-input"
+                        id="wish-input"
+                        placeholder="写下你的愿望（例如：2026年春节我希望...）"
+                        required
+                        maxlength="200"
+                        aria-label="新年愿望输入框"
+                        aria-describedby="wish-help wish-counter wish-error-message"
+                        aria-required="true"
+                        aria-invalid="false"
+                    ></textarea>
+                    <div class="wish-help-text" id="wish-help">
+                        💡 最多200个字符，Ctrl+Enter 或 ⌘+Enter 快速提交
+                    </div>
+                    <div class="wish-counter" id="wish-counter" aria-live="polite">
+                        <span id="char-count">0</span> / 200
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button
+                        type="submit"
+                        class="wish-submit-btn"
+                        id="wish-submit-btn"
+                        aria-label="提交愿望"
+                    >
+                        ✨ 点亮愿望
+                    </button>
+                    <button
+                        type="button"
+                        class="btn-secondary"
+                        id="clear-wish-btn"
+                        aria-label="清空输入"
+                    >
+                        🗑️ 清空
+                    </button>
+                </div>
+            </form>
+            
+            <!-- 愿望统计 -->
+            <div class="wish-stats" id="wish-stats" aria-live="polite">
+                <span class="badge" id="wish-count-badge">0 个愿望</span>
+            </div>
+            
+            <!-- 愿望画廊 -->
+            <div class="wish-gallery-container">
+                <h3 id="gallery-title" class="visually-hidden">愿望画廊</h3>
+                <div
+                   class="wish-gallery"
+                   id="wish-gallery"
+                   role="list"
+                   aria-labelledby="gallery-title"
+                   aria-live="polite"
+                   aria-busy="false"
+                   aria-atomic="false"
+               >
+                    <!-- 动态插入的愿望卡片 -->
+                    <div class="empty-state" id="empty-state">
+                        <div class="empty-state-icon">🌠</div>
+                        <div class="empty-state-text">还没有愿望</div>
+                        <div class="empty-state-subtext">成为第一个许愿的人吧！</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 快捷操作区域 -->
+        <section class="quick-actions" aria-labelledby="quick-actions-title">
+            <h2 id="quick-actions-title" class="visually-hidden">快捷操作</h2>
+            <div class="quick-actions-container">
+                <button
+                    class="btn-ghost"
+                    id="import-wishes-btn"
+                    aria-label="导入愿望"
+                    title="从JSON文件导入愿望"
+                >
+                    📥 导入愿望
+                </button>
+                <button
+                    class="btn-ghost"
+                    id="export-wishes-btn"
+                    aria-label="导出所有愿望"
+                    title="导出愿望为文本文件"
+                >
+                    📤 导出愿望
+                </button>
+                <button
+                    class="btn-ghost"
+                    id="share-btn"
+                    aria-label="分享倒计时"
+                    title="分享当前倒计时"
+                >
+                    📤 分享
+                </button>
+                <button
+                    class="btn-ghost"
+                    id="mute-toggle-btn"
+                    aria-label="切换静音"
+                    title="切换音效和音乐"
+                >
+                    🔊 音效
+                </button>
+                <button
+                    class="btn-ghost"
+                    id="theme-toggle-btn"
+                    aria-label="切换主题"
+                    title="切换显示模式"
+                >
+                    🌓 主题
+                </button>
+            </div>
+        </section>
+    </main>
+    
+    <!-- 页面底部 -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <p><strong>2026年春节倒计时项目</strong></p>
+            <p>设计并开发 | 许下你的农历新年愿望，与世界分享</p>
+            <div class="footer-links">
+                <a href="#countdown-title" aria-label="跳转到倒计时">倒计时</a> |
+                <a href="#wish-title" aria-label="跳转到许愿区">许愿</a> |
+                <a href="#gallery-title" aria-label="跳转到愿望画廊">画廊</a>
+            </div>
+            <p class="footer-tech">🎨 纯前端实现 | 🚀 响应式设计 | ♿ 无障碍支持</p>
+        </div>
+    </footer>
+    
+    <!-- 辅助功能：跳过导航链接 -->
+    <a href="#countdown-title" class="visually-hidden focusable" aria-label="跳转到主要内容">
+        跳转到主要内容
+    </a>
+    
+    <!-- JavaScript入口点 -->
+    <script type="module" src="js/main.js"></script>
+    
+    <!-- 备用脚本（如果模块不支持） -->
+    <noscript>
+        <div style="position: fixed; top: 0; left: 0; width: 100%; background: #ff4444; color: white; text-align: center; padding: 1rem; z-index: 10000;">
+            请启用JavaScript以使用本应用的所有功能
+        </div>
+    </noscript>
+</body>
+</html>

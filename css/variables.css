@@ -1,0 +1,290 @@
+/* CSS自定义属性 - 设计令牌系统 */
+/* 定义浅色主题 */
+:root[data-theme="light"] {
+    --color-background: #f8f9fa;
+    --color-background-light: #ffffff;
+    --color-background-dark: #e9ecef;
+    --color-text-primary: #0a1a3a;
+    --color-text-secondary: #333333;
+    --color-border: #dee2e6;
+    --color-accent: #007bff;
+    --color-accent-hover: #0056b3;
+}
+
+/* 定义暗色主题 */
+:root[data-theme="dark"] {
+    --color-background: #0a1a3a;
+    --color-background-light: #142850;
+    --color-background-dark: #050d1f;
+    --color-text-primary: #f8f9fa;
+    --color-text-secondary: #e9ecef;
+    --color-border: #dee2e6;
+    --color-accent: #ffd700;
+    --color-accent-hover: #ffed4e;
+}
+
+/* 定义自动模式 - 默认暗色 */
+:root[data-theme="auto"] {
+    --color-background: #0a1a3a;
+    --color-background-light: #142850;
+    --color-background-dark: #050d1f;
+    --color-text-primary: #f8f9fa;
+    --color-text-secondary: #e9ecef;
+    --color-border: #dee2e6;
+    --color-accent: #ffd700;
+    --color-accent-hover: #ffed4e;
+}
+
+/* 自动模式下的系统浅色偏好 */
+@media (prefers-color-scheme: light) {
+    :root[data-theme="auto"] {
+        --color-background: #f8f9fa;
+        --color-background-light: #ffffff;
+        --color-background-dark: #e9ecef;
+        --color-text-primary: #0a1a3a;
+        --color-text-secondary: #333333;
+        --color-border: #dee2e6;
+        --color-accent: #007bff;
+        --color-accent-hover: #0056b3;
+    }
+}
+
+/* 默认主题变量 */
+:root {
+    /*
+     * 颜色系统 - 节日主题配色
+     * 主色调：深午夜蓝作为背景（节日夜空）
+     * 强调色：金色用于重要元素（节日灯光）
+     * 辅助色：银白色用于文本（节日雪花）
+     * 高亮色：青色用于特效（节日极光）
+     * 语义化颜色：确保可访问性和状态指示
+     */
+
+    /* 基础色板 - 经过对比度优化 */
+    --color-midnight-blue: #0a1a3a;        /* WCAG AAA 级对比度 */
+    --color-midnight-blue-light: #142850;  /* 用于卡片背景 */
+    --color-midnight-blue-dark: #050d1f;   /* 用于深色背景 */
+    --color-midnight-blue-darker: #02060f; /* 用于模态框背景 */
+    
+    /* 节日金色 - 主要强调色 */
+    --color-radiant-gold: #ffd700;         /* 主金色，WCAG AA 级对比度 */
+    --color-radiant-gold-light: #ffed4e;   /* 悬停状态 */
+    --color-radiant-gold-dark: #e6c200;    /* 激活状态 */
+    --color-radiant-gold-dim: #b89f00;     /* 次要强调 */
+    
+    /* 银白色系 - 文本和边框 */
+    --color-silver-white: #f8f9fa;         /* 主要文本，WCAG AAA 级 */
+    --color-silver-white-dim: #e9ecef;     /* 次要文本 */
+    --color-silver-white-dark: #dee2e6;    /* 边框和分隔线 */
+    --color-silver-white-disabled: #adb5bd; /* 禁用状态 */
+    
+    /* 青色高亮 - 特效和装饰 */
+    --color-accent-glow: #00ffff;          /* 主高亮 */
+    --color-accent-glow-light: #66ffff;    /* 浅色变体 */
+    --color-accent-glow-dark: #00cccc;     /* 深色变体 */
+    --color-accent-glow-dim: #008b8b;      /* 低调高亮 */
+    
+    /* 透明度叠加 - 用于背景和遮罩 */
+    --color-dark-overlay: rgba(10, 26, 58, 0.85);      /* 主遮罩 */
+    --color-dark-overlay-light: rgba(10, 26, 58, 0.7); /* 半透明遮罩 */
+    --color-dark-overlay-heavy: rgba(5, 13, 31, 0.95); /* 重遮罩 */
+    --color-dark-overlay-transparent: rgba(10, 26, 58, 0.5); /* 轻遮罩 */
+    
+    /* 状态颜色 - 符合WCAG标准 */
+    --color-success: #28a745;              /* 成功 - 高对比度 */
+    --color-success-light: #34ce57;        /* 成功悬停 */
+    --color-success-dark: #1e7e34;         /* 成功激活 */
+    
+    --color-warning: #ffc107;              /* 警告 - 高对比度 */
+    --color-warning-light: #ffcd39;        /* 警告悬停 */
+    --color-warning-dark: #e6ac00;         /* 警告激活 */
+    
+    --color-error: #dc3545;                /* 错误 - 高对比度 */
+    --color-error-light: #e74c3c;          /* 错误悬停 */
+    --color-error-dark: #c82333;           /* 错误激活 */
+    
+    --color-info: #17a2b8;                 /* 信息 - 高对比度 */
+    --color-info-light: #1bc8da;           /* 信息悬停 */
+    --color-info-dark: #0f6674;            /* 信息激活 */
+    
+    /* 暗色模式增强 - 系统级暗色模式支持 */
+    --color-midnight-blue-dm: #0a1a3a;     /* 暗色模式背景 */
+    --color-midnight-blue-light-dm: #1a2d50; /* 暗色模式卡片 */
+    --color-radiant-gold-dm: #ffeb3b;      /* 暗色模式金色（更亮） */
+    --color-silver-white-dm: #ffffff;      /* 暗色模式文本（纯白） */
+    
+    /* 高对比度模式 - 无障碍支持 */
+    --color-midnight-blue-hc: #000000;     /* 高对比度背景 */
+    --color-radiant-gold-hc: #ffff00;      /* 高对比度强调（纯黄） */
+    --color-silver-white-hc: #ffffff;      /* 高对比度文本（纯白） */
+    
+    /* 语义化颜色别名 */
+    --color-background: var(--color-midnight-blue);
+    --color-background-light: var(--color-midnight-blue-light);
+    --color-background-dark: var(--color-midnight-blue-dark);
+    --color-text-primary: var(--color-silver-white);
+    --color-text-secondary: var(--color-silver-white-dim);
+    --color-text-disabled: var(--color-silver-white-disabled);
+    --color-border: var(--color-silver-white-dark);
+    --color-accent: var(--color-radiant-gold);
+    --color-accent-hover: var(--color-radiant-gold-light);
+    --color-accent-active: var(--color-radiant-gold-dark);
+    --color-highlight: var(--color-accent-glow);
+    
+    /* 交互状态颜色 */
+    --color-hover: rgba(255, 215, 0, 0.1);
+    --color-focus: rgba(0, 255, 255, 0.2);
+    --color-active: rgba(255, 215, 0, 0.2);
+    --color-disabled: rgba(255, 255, 255, 0.3);
+
+    /*
+     * 字体系统 - 完整的排版设计令牌
+     * 使用现代字体栈，确保跨平台一致性
+     */
+    --font-family-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-family-secondary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-family-decorative: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    --font-family-mono: 'Consolas', 'Monaco', 'Courier New', monospace;
+    
+    /* 字体大小 - 完美比例系统 (Major Third: 1.250) */
+    --font-size-xs: 0.75rem;    /* 12px - 小标签 */
+    --font-size-sm: 0.875rem;   /* 14px - 辅助文本 */
+    --font-size-base: 1rem;     /* 16px - 基础文本 */
+    --font-size-lg: 1.25rem;    /* 20px - 大文本 */
+    --font-size-xl: 1.563rem;   /* 25px - 标题 */
+    --font-size-2xl: 1.953rem;  /* 31px - 大标题 */
+    --font-size-3xl: 2.441rem;  /* 39px - 主标题 */
+    --font-size-4xl: 3.052rem;  /* 49px - 超大标题 */
+    --font-size-5xl: 3.815rem;  /* 61px - 特大标题 */
+    --font-size-6xl: 4.768rem;  /* 76px - 最大标题 */
+    
+    /* 字重 - 语义化命名 */
+    --font-weight-thin: 100;        /* 极细 */
+    --font-weight-light: 300;       /* 细体 */
+    --font-weight-normal: 400;      /* 正常 */
+    --font-weight-medium: 500;      /* 中等 */
+    --font-weight-semibold: 600;    /* 半粗 */
+    --font-weight-bold: 700;        /* 粗体 */
+    --font-weight-extrabold: 800;   /* 特粗 */
+    --font-weight-black: 900;       /* 黑体 */
+    
+    /* 行高 - 优化可读性 */
+    --line-height-tight: 1.25;      /* 紧凑 */
+    --line-height-base: 1.6;        /* 基础 */
+    --line-height-relaxed: 1.75;    /* 宽松 */
+    --line-height-loose: 2;         /* 宽松 */
+    
+    /* 字间距 - 增强可读性 */
+    --letter-spacing-tight: -0.02em;
+    --letter-spacing-normal: 0;
+    --letter-spacing-wide: 0.02em;
+    --letter-spacing-wider: 0.05em;
+    
+    /* 文本装饰 */
+    --text-decoration-none: none;
+    --text-decoration-underline: underline;
+    --text-decoration-line-through: line-through;
+    
+    /* 文本转换 */
+    --text-transform-none: none;
+    --text-transform-uppercase: uppercase;
+    --text-transform-lowercase: lowercase;
+    --text-transform-capitalize: capitalize;
+
+    /*
+     * 间距系统
+     * 基于4px基准的原子化设计
+     */
+    --spacing-unit: 1rem; /* 16px基准 */
+    --spacing-0: 0;           /* 0px */
+    --spacing-1: 0.25rem;     /* 4px */
+    --spacing-2: 0.5rem;      /* 8px */
+    --spacing-3: 0.75rem;     /* 12px */
+    --spacing-4: 1rem;        /* 16px */
+    --spacing-5: 1.25rem;     /* 20px */
+    --spacing-6: 1.5rem;      /* 24px */
+    --spacing-8: 2rem;        /* 32px */
+    --spacing-10: 2.5rem;     /* 40px */
+    --spacing-12: 3rem;       /* 48px */
+    --spacing-16: 4rem;       /* 64px */
+    --spacing-20: 5rem;       /* 80px */
+    
+    /* 语义化间距 */
+    --spacing-small: var(--spacing-2);
+    --spacing-medium: var(--spacing-4);
+    --spacing-large: var(--spacing-8);
+    --spacing-xl: var(--spacing-12);
+    --spacing-xxl: var(--spacing-16);
+
+    /*
+     * 断点系统
+     * 移动优先的响应式设计
+     */
+    --breakpoint-xs: 320px;    /* 超小屏幕，老式手机 */
+    --breakpoint-sm: 640px;    /* 小屏幕，手机横屏 */
+    --breakpoint-md: 768px;    /* 中等屏幕，平板竖屏 */
+    --breakpoint-lg: 1024px;   /* 大屏幕，平板横屏 */
+    --breakpoint-xl: 1280px;   /* 超大屏幕，桌面 */
+    --breakpoint-2xl: 1536px;  /* 特大屏幕，大桌面 */
+
+    /*
+     * 边框半径系统
+     */
+    --border-radius-none: 0;
+    --border-radius-sm: 0.125rem;  /* 2px */
+    --border-radius-md: 0.375rem;  /* 6px */
+    --border-radius-lg: 0.5rem;    /* 8px */
+    --border-radius-xl: 0.75rem;   /* 12px */
+    --border-radius-2xl: 1rem;     /* 16px */
+    --border-radius-full: 9999px;  /* 圆形 */
+
+    /*
+     * 阴影系统
+     */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    
+    /* 特殊阴影 */
+    --shadow-glow: 0 0 20px var(--color-accent-glow);
+    --shadow-gold: 0 0 20px var(--color-radiant-gold);
+    --shadow-inset: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+
+    /*
+     * 动画系统
+     */
+    --transition-fast: 150ms;
+    --transition-base: 250ms;
+    --transition-slow: 350ms;
+    --transition-slower: 500ms;
+    
+    --ease-linear: linear;
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    
+    /*
+     * 布局系统
+     */
+    --container-max-width: 1200px;
+    --container-max-width-wide: 1440px;
+    --container-padding: var(--spacing-4);
+    
+    /*
+     * Z-index 系统
+     */
+    --z-base: 1;
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-fixed: 300;
+    --z-modal-backdrop: 400;
+    --z-modal: 500;
+    --z-popover: 600;
+    --z-tooltip: 700;
+    --z-toast: 800;
+    --z-max: 9999;
+}
