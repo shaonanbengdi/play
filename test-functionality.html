@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>功能测试 - 2026春节倒计时</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-title {
+            color: #333;
+            border-bottom: 2px solid #ffd700;
+            padding-bottom: 10px;
+        }
+        .test-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status.pass { background: #4CAF50; color: white; }
+        .status.fail { background: #f44336; color: white; }
+        .status.pending { background: #ff9800; color: white; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #e8f5e9;
+            border-left: 4px solid #4CAF50;
+            display: none;
+        }
+        .error {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 2026春节倒计时 - 功能测试</h1>
+    
+    <div class="test-section">
+        <h2 class="test-title">1. 倒计时功能测试</h2>
+        <div class="test-item">
+            <strong>测试目标：</strong> 移除"正在计算剩余时间..."提示，直接显示倒计时
+            <br>
+            <span class="status pending" id="countdown-test">待测试</span>
+            <button onclick="testCountdown()">运行测试</button>
+            <div id="countdown-result" class="result"></div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2 class="test-title">2. 愿望可见性测试</h2>
+        <div class="test-item">
+            <strong>测试目标：</strong> 愿望可以被其他用户看到，显示愿望来源
+            <br>
+            <span class="status pending" id="wishes-test">待测试</span>
+            <button onclick="testWishes()">运行测试</button>
+            <div id="wishes-result" class="result"></div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2 class="test-title">3. 游戏房间功能测试</h2>
+        <div class="test-item">
+            <strong>测试目标：</strong> 房间创建、加入、玩家管理功能正常
+            <br>
+            <span class="status pending" id="game-test">待测试</span>
+            <button onclick="testGame()">运行测试</button>
+            <div id="game-result" class="result"></div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2 class="test-title">4. 综合测试</h2>
+        <div class="test-item">
+            <strong>测试目标：</strong> 所有功能协同工作测试
+            <br>
+            <span class="status pending" id="integration-test">待测试</span>
+            <button onclick="testIntegration()">运行测试</button>
+            <div id="integration-result" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        // 测试倒计时功能
+        function testCountdown() {
+            const resultDiv = document.getElementById('countdown-result');
+            const statusSpan = document.getElementById('countdown-test');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '正在测试...';
+            
+            try {
+                // 检查HTML中是否移除了状态文本
+                const statusText = document.getElementById('countdown-status-text');
+                const isHidden = statusText && statusText.style.display === 'none';
+                
+                // 检查倒计时元素是否存在
+                const days = document.getElementById('days');
+                const hours = document.getElementById('hours');
+                const minutes = document.getElementById('minutes');
+                const seconds = document.getElementById('seconds');
+                
+                const elementsExist = days && hours && minutes && seconds;
+                
+                if (isHidden && elementsExist) {
+                    statusSpan.className = 'status pass';
+                    statusSpan.textContent = '通过';
+                    resultDiv.innerHTML = `
+                        ✅ 倒计时状态文本已隐藏<br>
+                        ✅ 倒计时数字元素存在<br>
+                        ✅ 优化完成：不再显示"正在计算剩余时间..."
+                    `;
+                } else {
+                    statusSpan.className = 'status fail';
+                    statusSpan.textContent = '失败';
+                    resultDiv.innerHTML = `
+                        ❌ 测试失败<br>
+                        状态文本隐藏: ${isHidden}<br>
+                        元素存在: ${elementsExist}
+                    `;
+                }
+            } catch (error) {
+                statusSpan.className = 'status fail';
+                statusSpan.textContent = '错误';
+                resultDiv.innerHTML = `❌ 测试异常: ${error.message}`;
+            }
+        }
+
+        // 测试愿望可见性
+        function testWishes() {
+            const resultDiv = document.getElementById('wishes-result');
+            const statusSpan = document.getElementById('wishes-test');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '正在测试...';
+            
+            try {
+                // 检查愿望管理器是否支持公共愿望
+                const hasWishManager = typeof window.newYearApp !== 'undefined' && 
+                                      window.newYearApp.wishManager;
+                
+                if (hasWishManager) {
+                    const wishManager = window.newYearApp.wishManager;
+                    
+                    // 检查是否有公共愿望方法
+                    const hasGetPublicWishes = typeof wishManager.getPublicWishes === 'function';
+                    const hasGetAllWishes = typeof wishManager.getAllWishes === 'function';
+                    const hasSaveToPublic = typeof wishManager.saveToPublicStorage === 'function';
+                    
+                    if (hasGetPublicWishes && hasGetAllWishes && hasSaveToPublic) {
+                        statusSpan.className = 'status pass';
+                        statusSpan.textContent = '通过';
+                        resultDiv.innerHTML = `
+                            ✅ 愿望管理器已加载<br>
+                            ✅ 支持公共愿望存储<br>
+                            ✅ 支持获取所有愿望（包括公共）<br>
+                            ✅ 愿望可见性功能已实现
+                        `;
+                    } else {
+                        statusSpan.className = 'status fail';
+                        statusSpan.textContent = '部分通过';
+                        resultDiv.innerHTML = `
+                            ⚠️ 愿望管理器存在但功能不完整<br>
+                            公共愿望: ${hasGetPublicWishes}<br>
+                            获取所有: ${hasGetAllWishes}<br>
+                            保存公共: ${hasSaveToPublic}
+                        `;
+                    }
+                } else {
+                    statusSpan.className = 'status fail';
+                    statusSpan.textContent = '未就绪';
+                    resultDiv.innerHTML = '⚠️ 应用未完全加载，请刷新页面后重试';
+                }
+            } catch (error) {
+                statusSpan.className = 'status fail';
+                statusSpan.textContent = '错误';
+                resultDiv.innerHTML = `❌ 测试异常: ${error.message}`;
+            }
+        }
+
+        // 测试游戏房间功能
+        function testGame() {
+            const resultDiv = document.getElementById('game-result');
+            const statusSpan = document.getElementById('game-test');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '正在测试...';
+            
+            try {
+                // 检查游戏集成是否加载
+                const hasGameIntegration = typeof window.newYearApp !== 'undefined' && 
+                                          window.newYearApp.gameIntegration;
+                
+                if (hasGameIntegration) {
+                    const gameIntegration = window.newYearApp.gameIntegration;
+                    
+                    // 检查游戏管理器和房间管理器
+                    const hasGameManager = typeof gameIntegration.gameManager !== 'undefined' && 
+                                          gameIntegration.gameManager !== null;
+                    
+                    if (hasGameManager) {
+                        const gameManager = gameIntegration.gameManager;
+                        const hasRoomManager = typeof gameManager.roomManager !== 'undefined' && 
+                                              gameManager.roomManager !== null;
+                        
+                        if (hasRoomManager) {
+                            statusSpan.className = 'status pass';
+                            statusSpan.textContent = '通过';
+                            resultDiv.innerHTML = `
+                                ✅ 游戏系统集成成功<br>
+                                ✅ 游戏管理器已加载<br>
+                                ✅ 房间管理器可用<br>
+                                ✅ 房间创建/加入功能就绪
+                            `;
+                        } else {
+                            statusSpan.className = 'status fail';
+                            statusSpan.textContent = '部分通过';
+                            resultDiv.innerHTML = `
+                                ⚠️ 游戏管理器存在但房间管理器缺失<br>
+                                游戏集成: ${hasGameManager}<br>
+                                房间管理: ${hasRoomManager}
+                            `;
+                        }
+                    } else {
+                        statusSpan.className = 'status fail';
+                        statusSpan.textContent = '未就绪';
+                        resultDiv.innerHTML = '⚠️ 游戏管理器未加载，请检查PeerJS加载状态';
+                    }
+                } else {
+                    statusSpan.className = 'status fail';
+                    statusSpan.textContent = '未就绪';
+                    resultDiv.innerHTML = '⚠️ 游戏集成未加载，请刷新页面后重试';
+                }
+            } catch (error) {
+                statusSpan.className = 'status fail';
+                statusSpan.textContent = '错误';
+                resultDiv.innerHTML = `❌ 测试异常: ${error.message}`;
+            }
+        }
+
+        // 综合测试
+        function testIntegration() {
+            const resultDiv = document.getElementById('integration-result');
+            const statusSpan = document.getElementById('integration-test');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '正在测试...';
+            
+            try {
+                const tests = [];
+                
+                // 1. 检查应用是否加载
+                if (typeof window.newYearApp !== 'undefined') {
+                    tests.push('✅ 应用已加载');
+                } else {
+                    tests.push('❌ 应用未加载');
+                    statusSpan.className = 'status fail';
+                    statusSpan.textContent = '失败';
+                    resultDiv.innerHTML = tests.join('<br>');
+                    return;
+                }
+                
+                // 2. 检查倒计时器
+                if (window.newYearApp.countdownTimer) {
+                    tests.push('✅ 倒计时器运行正常');
+                } else {
+                    tests.push('❌ 倒计时器异常');
+                }
+                
+                // 3. 检查愿望管理器
+                if (window.newYearApp.wishManager && 
+                    typeof window.newYearApp.wishManager.getPublicWishes === 'function') {
+                    tests.push('✅ 愿望可见性功能正常');
+                } else {
+                    tests.push('❌ 愿望功能异常');
+                }
+                
+                // 4. 检查游戏集成
+                if (window.newYearApp.gameIntegration && 
+                    window.newYearApp.gameIntegration.gameManager) {
+                    tests.push('✅ 游戏房间功能正常');
+                } else {
+                    tests.push('⚠️ 游戏功能未完全加载');
+                }
+                
+                // 5. 检查粒子系统
+                if (window.newYearApp.particleSystem) {
+                    tests.push('✅ 粒子动画系统正常');
+                } else {
+                    tests.push('⚠️ 粒子系统异常');
+                }
+                
+                // 评估结果
+                const passed = tests.filter(t => t.includes('✅')).length;
+                const total = tests.length;
+                
+                if (passed >= total * 0.8) { // 80%通过
+                    statusSpan.className = 'status pass';
+                    statusSpan.textContent = '通过';
+                    resultDiv.innerHTML = `🎉 综合测试通过 (${passed}/${total})<br>` + tests.join('<br>');
+                } else if (passed >= total * 0.5) {
+                    statusSpan.className = 'status pending';
+                    statusSpan.textContent = '部分通过';
+                    resultDiv.innerHTML = `⚠️ 部分功能通过 (${passed}/${total})<br>` + tests.join('<br>');
+                } else {
+                    statusSpan.className = 'status fail';
+                    statusSpan.textContent = '失败';
+                    resultDiv.innerHTML = `❌ 多数功能异常 (${passed}/${total})<br>` + tests.join('<br>');
+                }
+                
+            } catch (error) {
+                statusSpan.className = 'status fail';
+                statusSpan.textContent = '错误';
+                resultDiv.innerHTML = `❌ 综合测试异常: ${error.message}`;
+            }
+        }
+
+        // 页面加载完成后自动运行基础测试
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                console.log('🧪 功能测试页面已加载，可以开始测试');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

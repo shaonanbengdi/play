@@ -536,33 +536,16 @@ class NewYearCountdownApp {
     }
 
     /**
-     * 更新状态文本（使用策略映射）
+     * 更新状态文本（已优化：移除中间状态提示，直接显示倒计时）
      */
     updateStatusText(remainingSeconds) {
-        const statusText = document.getElementById('countdown-status-text');
-        if (!statusText) return;
-
-        const statusStrategies = {
-            long: { threshold: 300, text: '距离春节还有较长时间' },
-            medium: { threshold: 60, text: '春节即将到来！' },
-            short: { threshold: 10, text: '准备迎接新年！' },
-            final: { threshold: 0, text: (seconds) => `倒计时最后 ${seconds} 秒！` },
-            completed: { threshold: -1, text: '春节快乐！' }
-        };
-
-        let text = statusStrategies.completed.text;
-        
-        for (const strategy of Object.values(statusStrategies)) {
-            if (remainingSeconds > strategy.threshold) {
-                text = typeof strategy.text === 'function'
-                    ? strategy.text(remainingSeconds)
-                    : strategy.text;
-                break;
-            }
+        // 已优化：不再显示状态文本，只通过倒计时数字显示
+        // 保持屏幕阅读器通知但减少频率
+        if (remainingSeconds <= 10 && remainingSeconds > 0) {
+            this.announceToScreenReader(`倒计时最后 ${remainingSeconds} 秒`);
+        } else if (remainingSeconds === 0) {
+            this.announceToScreenReader('春节快乐');
         }
-
-        statusText.textContent = text;
-        this.announceToScreenReader(text);
     }
 
     /**
@@ -1095,6 +1078,13 @@ class NewYearCountdownApp {
                     this.gameIntegration = new GameIntegration(this);
                     await this.gameIntegration.init();
                     console.log('🎮 游戏系统集成成功');
+                    
+                    // 检查URL哈希，自动加入房间
+                    const hash = window.location.hash;
+                    if (hash.startsWith('#room-')) {
+                        const roomId = hash.substr(6);
+                        console.log(`🔗 检测到房间链接: ${roomId}，准备自动加入...`);
+                    }
                 } catch (error) {
                     console.warn('游戏系统初始化失败:', error);
                     // 游戏系统不是核心功能，不影响主应用

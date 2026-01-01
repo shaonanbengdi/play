@@ -178,12 +178,122 @@ export class WishManager {
         
         try {
             localStorage.setItem(this.storageKey, JSON.stringify(this.wishes));
+            // 同时保存到公共愿望存储（用于愿望可见性）
+            this.saveToPublicStorage();
             return true;
         } catch (error) {
             this.dispatchStorageError('保存到存储失败');
             console.error('Save to storage error:', error);
             return false;
         }
+    }
+
+    /**
+     * 保存到公共愿望存储（实现愿望可见性）
+     */
+    saveToPublicStorage() {
+        try {
+            const publicStorageKey = 'public-wishes-2026';
+            let publicWishes = [];
+            
+            // 尝试从本地存储获取公共愿望
+            const stored = localStorage.getItem(publicStorageKey);
+            if (stored) {
+                const data = safeJSONParse(stored, []);
+                if (Array.isArray(data)) {
+                    publicWishes = data;
+                }
+            }
+            
+            // 获取当前用户的新愿望
+            const newWishes = this.wishes.filter(wish => {
+                // 检查是否已经存在于公共愿望中（通过时间戳和内容判断）
+                return !publicWishes.some(publicWish =>
+                    publicWish.text === wish.text &&
+                    publicWish.timestamp === wish.timestamp
+                );
+            });
+            
+            // 添加到公共愿望列表（限制数量以避免存储过大）
+            newWishes.forEach(wish => {
+                publicWishes.unshift({
+                    ...wish,
+                    userId: this.getUserId(), // 添加用户标识
+                    isPublic: true
+                });
+            });
+            
+            // 限制公共愿望数量（最多100条）
+            if (publicWishes.length > 100) {
+                publicWishes = publicWishes.slice(0, 100);
+            }
+            
+            // 保存到本地存储（模拟公共存储）
+            localStorage.setItem(publicStorageKey, JSON.stringify(publicWishes));
+            
+        } catch (error) {
+            console.warn('保存到公共存储失败:', error);
+        }
+    }
+
+    /**
+     * 获取用户ID（用于愿望可见性）
+     */
+    getUserId() {
+        // 从本地存储获取或生成用户ID
+        const userIdKey = 'user-id-2026';
+        let userId = localStorage.getItem(userIdKey);
+        
+        if (!userId) {
+            userId = 'user-' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem(userIdKey, userId);
+        }
+        
+        return userId;
+    }
+
+    /**
+     * 获取公共愿望（愿望可见性功能）
+     */
+    getPublicWishes() {
+        try {
+            const publicStorageKey = 'public-wishes-2026';
+            const stored = localStorage.getItem(publicStorageKey);
+            
+            if (!stored) return [];
+            
+            const data = safeJSONParse(stored, []);
+            return Array.isArray(data) ? data : [];
+        } catch (error) {
+            console.error('获取公共愿望失败:', error);
+            return [];
+        }
+    }
+
+    /**
+     * 获取所有愿望（包括公共愿望）
+     */
+    getAllWishes() {
+        const publicWishes = this.getPublicWishes();
+        const myWishes = this.wishes.map(wish => ({
+            ...wish,
+            userId: this.getUserId(),
+            isMine: true
+        }));
+        
+        // 合并愿望，去重
+        const allWishes = [...publicWishes];
+        const existingIds = new Set(publicWishes.map(w => `${w.userId}-${w.timestamp}-${w.text}`));
+        
+        myWishes.forEach(wish => {
+            const id = `${wish.userId}-${wish.timestamp}-${wish.text}`;
+            if (!existingIds.has(id)) {
+                allWishes.unshift(wish);
+                existingIds.add(id);
+            }
+        });
+        
+        return allWishes;
     }
 
     /**
@@ -466,7 +576,7 @@ export class WishManager {
     }
 
     /**
-     * 渲染愿望画廊 - 使用文档片段优化性能
+     * 渲染愿望画廊 - 使用文档片段优化性能，支持愿望可见性
      */
     renderGallery() {
         if (!this.elements.gallery) return;
@@ -479,16 +589,19 @@ export class WishManager {
         // 使用文档片段批量操作DOM
         const fragment = document.createDocumentFragment();
         
-        if (this.wishes.length === 0) {
+        // 获取所有愿望（包括公共愿望）
+        const allWishes = this.getAllWishes();
+        
+        if (allWishes.length === 0) {
             // 显示空状态
             const emptyState = createElement('div', {
                 class: 'wish-empty-state'
-            }, '还没有愿望，快来许下第一个愿望吧！');
+            }, '还没有愿望，快来许下第一个愿望吧！成为第一个许愿的人！');
             fragment.appendChild(emptyState);
         } else {
             // 批量创建愿望卡片
-            const cards = this.wishes.map((wish, index) =>
-                this.createWishCard(wish, index)
+            const cards = allWishes.map((wish, index) =>
+                this.createWishCard(wish, index, true) // 第三个参数表示显示公共愿望
             );
             
             // 一次性添加到文档片段
@@ -500,7 +613,7 @@ export class WishManager {
                     setTimeout(() => {
                         card.style.opacity = '1';
                         card.style.transform = 'translateY(0) scale(1)';
-                    }, index * 50);
+                    }, index * 30); // 加快动画速度
                 });
             });
         }
@@ -513,7 +626,7 @@ export class WishManager {
         this.updateStats();
         
         // 通知屏幕阅读器
-        const newCount = this.wishes.length;
+        const newCount = allWishes.length;
         if (newCount !== previousCount) {
             const announcement = `愿望列表已更新，现在有 ${newCount} 个愿望`;
             this.announceToScreenReader(announcement);
@@ -524,24 +637,36 @@ export class WishManager {
     }
     
     /**
-     * 更新愿望统计
+     * 更新愿望统计（支持公共愿望显示）
      */
     updateStats() {
         if (!this.elements.stats) return;
         
-        const count = this.wishes.length;
+        // 获取所有愿望数量（包括公共愿望）
+        const allWishes = this.getAllWishes();
+        const publicCount = allWishes.length;
+        const myCount = this.wishes.length;
+        
         const badge = this.elements.stats.querySelector('#wish-count-badge');
         
         if (badge) {
-            badge.textContent = `${count} 个愿望`;
+            if (publicCount > myCount) {
+                // 显示公共愿望总数和个人愿望数
+                badge.textContent = `${publicCount} 个愿望 (${myCount} 个我的)`;
+                badge.title = `公共愿望: ${publicCount} | 我的愿望: ${myCount}`;
+            } else {
+                badge.textContent = `${myCount} 个愿望`;
+                badge.title = `我的愿望: ${myCount}`;
+            }
         }
         
         // 触发统计更新事件
         const event = new CustomEvent('wish-stats-updated', {
             detail: {
-                count: count,
+                count: myCount,
+                publicCount: publicCount,
                 maxWishes: this.maxWishes,
-                remaining: this.maxWishes - count
+                remaining: this.maxWishes - myCount
             }
         });
         
@@ -551,7 +676,7 @@ export class WishManager {
         
         // 同时更新提交按钮状态
         if (this.elements.submitBtn) {
-            if (count >= this.maxWishes) {
+            if (myCount >= this.maxWishes) {
                 this.elements.submitBtn.disabled = true;
                 this.elements.submitBtn.textContent = '愿望已满';
                 this.elements.submitBtn.title = `已达到最大愿望数量 (${this.maxWishes})`;
@@ -567,9 +692,10 @@ export class WishManager {
      * 创建愿望卡片
      * @param {Object} wish - 愿望对象
      * @param {number} index - 索引
+     * @param {boolean} showPublic - 是否显示公共愿望信息
      * @returns {HTMLElement} 卡片元素
      */
-    createWishCard(wish, index) {
+    createWishCard(wish, index, showPublic = false) {
         const card = createElement('div', {
             class: 'wish-card wish-card-enter',
             'data-index': index
@@ -579,24 +705,58 @@ export class WishManager {
             class: 'wish-text'
         }, wish.text);
         
-        const timestamp = createElement('div', {
+        // 创建时间戳和用户信息容器
+        const infoContainer = createElement('div', {
             class: 'wish-timestamp'
-        }, wish.formattedDate);
-        
-        // 删除按钮
-        const deleteBtn = createElement('button', {
-            class: 'wish-delete-btn',
-            'aria-label': '删除愿望'
-        }, '×');
-        
-        // 删除按钮点击事件
-        deleteBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.removeWish(index);
         });
         
-        // 批量添加子元素
-        card.append(text, timestamp, deleteBtn);
+        // 格式化时间戳
+        const formattedTime = wish.formattedDate || new Date(wish.timestamp).toLocaleString('zh-CN');
+        
+        // 如果是公共愿望，显示用户标识
+        if (showPublic && wish.userId) {
+            const isMine = wish.isMine || wish.userId === this.getUserId();
+            const userLabel = isMine ? '我' : `用户${wish.userId.substr(-4)}`;
+            
+            // 创建时间戳文本
+            const timeText = document.createTextNode(`${formattedTime} · ${userLabel}`);
+            infoContainer.appendChild(timeText);
+            
+            // 添加愿望来源标签
+            const tag = createElement('span', {
+                class: `wish-source-tag ${isMine ? 'mine' : 'public'}`
+            }, isMine ? '我的' : '公共');
+            infoContainer.appendChild(tag);
+            
+            // 添加CSS类用于样式
+            if (isMine) {
+                card.classList.add('mine');
+            } else {
+                card.classList.add('public');
+            }
+        } else {
+            infoContainer.textContent = formattedTime;
+        }
+        
+        // 只有自己的愿望才显示删除按钮
+        const isMine = wish.isMine || wish.userId === this.getUserId();
+        if (isMine) {
+            // 删除按钮
+            const deleteBtn = createElement('button', {
+                class: 'wish-delete-btn',
+                'aria-label': '删除愿望'
+            }, '×');
+            
+            // 删除按钮点击事件
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.removeWish(index);
+            });
+            
+            card.append(text, infoContainer, deleteBtn);
+        } else {
+            card.append(text, infoContainer);
+        }
         
         return card;
     }

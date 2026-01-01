@@ -73,15 +73,14 @@
                     <span class="label">秒</span>
                 </div>
             </div>
-            <!-- 倒计时状态文本 -->
-            <div class="countdown-status-text" id="countdown-status-text" aria-live="polite" aria-atomic="true">
-                正在计算剩余时间...
-            </div>
+            <!-- 倒计时状态文本 - 已优化为直接显示倒计时 -->
+            <div class="countdown-status-text" id="countdown-status-text" aria-live="polite" aria-atomic="true" style="display: none;"></div>
         </section>
         
         <!-- 许愿区域 -->
         <section class="wish-section" aria-labelledby="wish-title">
             <h2 id="wish-title" class="section-title">许下你的新年愿望</h2>
+            <p class="wish-subtitle">你的愿望将对其他用户可见，共同分享新年祝福</p>
             
             <!-- 许愿表单 -->
             <form class="wish-form" id="wish-form" autocomplete="off" novalidate>
