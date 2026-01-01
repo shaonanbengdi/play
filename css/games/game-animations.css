@@ -1,0 +1,626 @@
+/**
+ * 游戏动画样式
+ * @module game-animations
+ */
+
+/* 游戏通用动画 */
+@keyframes gameFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes gameFadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes gameScaleIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes gameScaleOut {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: scale(1.2);
+        opacity: 0;
+    }
+}
+
+@keyframes gameSlideInLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes gameSlideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes gameSlideOutLeft {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+@keyframes gameSlideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes gameBounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes gameShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+@keyframes gamePulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes gameRotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes gameFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+/* 游戏元素动画类 */
+.animate-fade-in {
+    animation: gameFadeIn 0.5s ease forwards;
+}
+
+.animate-fade-out {
+    animation: gameFadeOut 0.5s ease forwards;
+}
+
+.animate-scale-in {
+    animation: gameScaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.animate-scale-out {
+    animation: gameScaleOut 0.4s ease forwards;
+}
+
+.animate-slide-in-left {
+    animation: gameSlideInLeft 0.6s ease-out forwards;
+}
+
+.animate-slide-in-right {
+    animation: gameSlideInRight 0.6s ease-out forwards;
+}
+
+.animate-slide-out-left {
+    animation: gameSlideOutLeft 0.6s ease-in forwards;
+}
+
+.animate-slide-out-right {
+    animation: gameSlideOutRight 0.6s ease-in forwards;
+}
+
+.animate-bounce {
+    animation: gameBounce 0.6s ease infinite;
+}
+
+.animate-shake {
+    animation: gameShake 0.5s ease;
+}
+
+.animate-pulse {
+    animation: gamePulse 1s ease infinite;
+}
+
+.animate-rotate {
+    animation: gameRotate 2s linear infinite;
+}
+
+.animate-float {
+    animation: gameFloat 3s ease-in-out infinite;
+}
+
+/* 游戏特定动画 */
+@keyframes fuFall {
+    from {
+        transform: translateY(-50px) rotate(0deg);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0.8;
+    }
+}
+
+@keyframes redEnvelopePulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 40px rgba(255, 71, 87, 0.8);
+    }
+}
+
+@keyframes zodiacGlow {
+    0%, 100% {
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    }
+    50% {
+        text-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.8);
+    }
+}
+
+@keyframes scorePop {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes particleExplosion {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+    }
+}
+
+@keyframes rainbow {
+    0% { color: #ff6b6b; }
+    20% { color: #ffd700; }
+    40% { color: #4ecdc4; }
+    60% { color: #95e1d3; }
+    80% { color: #ff8c42; }
+    100% { color: #ff6b6b; }
+}
+
+/* 游戏元素动画 */
+.game-element-fu {
+    animation: fuFall linear forwards;
+}
+
+.game-element-red-envelope {
+    animation: redEnvelopePulse 1s ease-in-out infinite;
+}
+
+.game-element-zodiac {
+    animation: zodiacGlow 2s ease-in-out infinite;
+}
+
+.game-element-score {
+    animation: scorePop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.game-element-particle {
+    animation: particleExplosion 1s ease-out forwards;
+}
+
+.game-element-rainbow {
+    animation: rainbow 3s linear infinite;
+}
+
+/* 游戏界面过渡 */
+.game-transition-fade {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.game-transition-scale {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.game-transition-slide {
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+/* 游戏按钮动画 */
+.game-btn-click {
+    animation: gameScaleOut 0.2s ease;
+}
+
+.game-btn-hover {
+    animation: gamePulse 0.3s ease;
+}
+
+/* 游戏状态动画 */
+.game-status-active {
+    animation: gameBounce 0.5s ease;
+}
+
+.game-status-success {
+    animation: gameScaleIn 0.5s ease;
+}
+
+.game-status-error {
+    animation: gameShake 0.5s ease;
+}
+
+/* 游戏加载动画 */
+@keyframes loadingDots {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+.loading-dots::after {
+    content: '...';
+    animation: loadingDots 1.5s ease-in-out infinite;
+}
+
+.loading-dots::before {
+    content: '';
+    animation: loadingDots 1.5s ease-in-out infinite;
+    animation-delay: 0.2s;
+}
+
+/* 游戏进度动画 */
+@keyframes progressGlow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(78, 205, 196, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(78, 205, 196, 1);
+    }
+}
+
+.game-progress-glow {
+    animation: progressGlow 2s ease-in-out infinite;
+}
+
+/* 游戏文字动画 */
+@keyframes textGlow {
+    0%, 100% {
+        text-shadow: 0 0 5px currentColor;
+    }
+    50% {
+        text-shadow: 0 0 15px currentColor, 0 0 25px currentColor;
+    }
+}
+
+.game-text-glow {
+    animation: textGlow 2s ease-in-out infinite;
+}
+
+@keyframes textWave {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-5px); }
+    75% { transform: translateY(5px); }
+}
+
+.game-text-wave {
+    display: inline-block;
+    animation: textWave 2s ease-in-out infinite;
+}
+
+/* 游戏背景动画 */
+@keyframes backgroundPulse {
+    0%, 100% {
+        background-size: 100% 100%;
+    }
+    50% {
+        background-size: 105% 105%;
+    }
+}
+
+.game-background-pulse {
+    animation: backgroundPulse 5s ease-in-out infinite;
+}
+
+/* 游戏卡片动画 */
+@keyframes cardFlip {
+    0% {
+        transform: rotateY(0deg);
+    }
+    100% {
+        transform: rotateY(180deg);
+    }
+}
+
+.game-card-flip {
+    animation: cardFlip 0.6s ease-in-out;
+    transform-style: preserve-3d;
+}
+
+/* 游戏胜利动画 */
+@keyframes victorySpin {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(1.2);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+.game-victory {
+    animation: victorySpin 2s ease-in-out;
+}
+
+/* 游戏失败动画 */
+@keyframes failureDrop {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    100% {
+        transform: translateY(50px) rotate(15deg);
+        opacity: 0.5;
+    }
+}
+
+.game-failure {
+    animation: failureDrop 0.6s ease-in-out;
+}
+
+/* 组合动画 */
+.animate-enter {
+    animation: gameSlideInRight 0.5s ease-out, gameScaleIn 0.5s ease-out;
+}
+
+.animate-exit {
+    animation: gameSlideOutLeft 0.5s ease-in, gameFadeOut 0.5s ease-in;
+}
+
+.animate-pop-in {
+    animation: gameScaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.animate-pop-out {
+    animation: gameScaleOut 0.3s ease;
+}
+
+/* 延迟动画 */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+
+/* 持续动画 */
+.duration-fast { animation-duration: 0.2s; }
+.duration-normal { animation-duration: 0.4s; }
+.duration-slow { animation-duration: 0.6s; }
+.duration-slower { animation-duration: 1s; }
+
+/* 动画填充模式 */
+.fill-forwards { animation-fill-mode: forwards; }
+.fill-backwards { animation-fill-mode: backwards; }
+.fill-both { animation-fill-mode: both; }
+
+/* 动画播放状态 */
+.animation-paused { animation-play-state: paused; }
+.animation-running { animation-play-state: running; }
+
+/* 响应式动画调整 */
+@media (max-width: 768px) {
+    .game-countdown {
+        font-size: 80px;
+    }
+    
+    .game-element-fu {
+        animation-duration: 3s;
+    }
+    
+    .game-element-red-envelope {
+        animation-duration: 1.5s;
+    }
+    
+    .game-text-wave {
+        animation-duration: 1.5s;
+    }
+}
+
+/* 暗色模式适配 */
+@media (prefers-color-scheme: dark) {
+    .game-element-fu {
+        filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.5));
+    }
+    
+    .game-element-red-envelope {
+        filter: drop-shadow(0 0 15px rgba(255, 71, 87, 0.8));
+    }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    .game-element-fu {
+        filter: contrast(1.5);
+    }
+    
+    .game-element-red-envelope {
+        filter: contrast(1.5);
+    }
+}
+
+/* 减少动画模式 */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* 工具动画类 */
+.no-animation {
+    animation: none !important;
+}
+
+.animation-reset {
+    animation: none;
+    /* 触发重绘 */
+    transform: translateZ(0);
+}
+
+/* 性能优化 */
+.gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+.will-change-transform {
+    will-change: transform;
+}
+
+.will-change-opacity {
+    will-change: opacity;
+}
+
+/* 动画事件钩子 */
+.animation-start {
+    /* 动画开始时添加的类 */
+}
+
+.animation-end {
+    /* 动画结束时添加的类 */
+}
+
+.animation-iteration {
+    /* 每次迭代时添加的类 */
+}
+
+/* 自定义动画属性 */
+@keyframes customBounce {
+    0% {
+        transform: scale(1) translateY(0);
+    }
+    50% {
+        transform: scale(1.1) translateY(-10px);
+    }
+    100% {
+        transform: scale(1) translateY(0);
+    }
+}
+
+.custom-bounce {
+    animation: customBounce 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* 游戏特殊效果 */
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+    }
+    40% {
+        transform: translate(-2px, -2px);
+    }
+    60% {
+        transform: translate(2px, 2px);
+    }
+    80% {
+        transform: translate(2px, -2px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+
+.game-glitch {
+    animation: glitch 0.3s ease;
+}
+
+@keyframes rainbowText {
+    0% { color: #ff0000; }
+    14% { color: #ff8800; }
+    28% { color: #ffff00; }
+    42% { color: #00ff00; }
+    56% { color: #0088ff; }
+    70% { color: #8800ff; }
+    84% { color: #ff0088; }
+    100% { color: #ff0000; }
+}
+
+.game-rainbow-text {
+    animation: rainbowText 3s linear infinite;
+}

@@ -7,6 +7,7 @@ import { ParticleSystem } from './modules/particle-system.js';
 import { WishManager } from './modules/wishes-manager.js';
 import { AudioManager } from './modules/audio-manager.js';
 import { createElement } from './modules/utils.js';
+import { GameIntegration } from './modules/game-integration.js';
 
 /**
  * 应用程序主类
@@ -21,6 +22,7 @@ class NewYearCountdownApp {
         this.particleSystem = null;
         this.wishManager = null;
         this.audioManager = null;
+        this.gameIntegration = null;
         
         // DOM元素引用
         this.elements = {};
@@ -195,6 +197,9 @@ class NewYearCountdownApp {
         // 6. 初始化音频管理器
         this.audioManager = new AudioManager();
         this.audioManager.init();
+        
+        // 7. 初始化游戏集成（异步）
+        this.initGameIntegration();
     }
 
     /**
@@ -1080,6 +1085,34 @@ class NewYearCountdownApp {
     }
 
     /**
+     * 初始化游戏集成
+     */
+    async initGameIntegration() {
+        try {
+            // 延迟初始化，避免影响主应用性能
+            setTimeout(async () => {
+                try {
+                    this.gameIntegration = new GameIntegration(this);
+                    await this.gameIntegration.init();
+                    console.log('🎮 游戏系统集成成功');
+                } catch (error) {
+                    console.warn('游戏系统初始化失败:', error);
+                    // 游戏系统不是核心功能，不影响主应用
+                }
+            }, 1000); // 延迟1秒初始化游戏系统
+        } catch (error) {
+            console.warn('游戏集成初始化异常:', error);
+        }
+    }
+
+    /**
+     * 获取游戏集成实例
+     */
+    getGameIntegration() {
+        return this.gameIntegration;
+    }
+
+    /**
      * 销毁应用程序
      */
     destroy() {
@@ -1097,6 +1130,10 @@ class NewYearCountdownApp {
         
         if (this.wishManager) {
             this.wishManager.destroy();
+        }
+        
+        if (this.gameIntegration) {
+            this.gameIntegration.destroy();
         }
         
         // 清理事件监听器

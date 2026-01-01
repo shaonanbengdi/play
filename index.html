@@ -28,6 +28,10 @@
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/animations-additional.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <!-- 游戏样式 -->
+    <link rel="stylesheet" href="css/games/game-base.css">
+    <link rel="stylesheet" href="css/games/game-components.css">
+    <link rel="stylesheet" href="css/games/game-animations.css">
     
     <title>2026年春节倒计时 - 许下你的农历新年愿望</title>
 </head>
@@ -195,7 +199,83 @@
                 </button>
             </div>
         </section>
+        
+        <!-- 游戏区域 -->
+        <section class="game-section" aria-labelledby="game-title">
+            <h2 id="game-title" class="section-title">春节联机小游戏</h2>
+            <p class="game-subtitle">与朋友一起欢度新春，实时联机互动</p>
+            
+            <!-- 游戏入口按钮 -->
+            <div class="game-actions">
+                <button class="game-btn" data-game="fu-character-catch" aria-label="接福字挑战">
+                    🧧 接福字挑战
+                </button>
+                <button class="game-btn" data-game="red-envelope-race" aria-label="抢红包竞速">
+                    💰 抢红包竞速
+                </button>
+                <button class="game-btn" data-game="zodiac-battle" aria-label="生肖对战">
+                    🐯 生肖对战
+                </button>
+            </div>
+            
+            <!-- 游戏状态面板 -->
+            <div class="game-status" id="game-status-panel" style="display: none;">
+                <div class="status-item">
+                    <span class="status-label">游戏状态</span>
+                    <span class="status-value" id="game-status-text">未开始</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">房间ID</span>
+                    <span class="status-value" id="game-room-id">-</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">玩家</span>
+                    <span class="status-value" id="game-player-count">0</span>
+                </div>
+            </div>
+            
+            <!-- 游戏操作区域 -->
+            <div class="game-controls" id="game-controls" style="display: none;">
+                <button class="control-btn primary" id="create-room-btn">创建房间</button>
+                <button class="control-btn secondary" id="join-room-btn">加入房间</button>
+                <button class="control-btn danger" id="leave-room-btn" style="display: none;">离开房间</button>
+                <button class="control-btn primary" id="start-game-btn" style="display: none;">开始游戏</button>
+            </div>
+            
+            <!-- 房间输入区域 -->
+            <div class="game-room-input" id="game-room-input" style="display: none;">
+                <div class="input-group">
+                    <label for="room-id-input">房间ID</label>
+                    <input type="text" id="room-id-input" placeholder="输入6位房间ID" maxlength="6">
+                </div>
+                <div class="input-group">
+                    <label for="game-select">选择游戏</label>
+                    <select id="game-select">
+                        <option value="fu-character-catch">接福字挑战</option>
+                        <option value="red-envelope-race">抢红包竞速</option>
+                        <option value="zodiac-battle">生肖对战</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 游戏说明文档链接 -->
+            <div class="game-docs-link">
+                <a href="GAME_INSTRUCTIONS.md" target="_blank" aria-label="查看详细游戏说明文档" class="link-text">
+                    📖 查看详细游戏说明文档
+                </a>
+            </div>
+        </section>
     </main>
+    
+    <!-- 游戏画布容器（隐藏） -->
+    <div id="game-canvas-container" class="game-canvas-container" style="display: none;">
+        <canvas id="game-canvas"></canvas>
+        <div class="game-overlay">
+            <div class="overlay-content" id="game-overlay-content">
+                <!-- 动态游戏UI -->
+            </div>
+        </div>
+    </div>
     
     <!-- 页面底部 -->
     <footer class="footer" role="contentinfo">
@@ -215,6 +295,9 @@
     <a href="#countdown-title" class="visually-hidden focusable" aria-label="跳转到主要内容">
         跳转到主要内容
     </a>
+    
+    <!-- 导入PeerJS CDN -->
+    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
     
     <!-- JavaScript入口点 -->
     <script type="module" src="js/main.js"></script>

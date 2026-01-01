@@ -1,0 +1,26 @@
+<svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <!-- 鼠 -->
+  <text x="20" y="30" font-size="20">鼠</text>
+  <!-- 牛 -->
+  <text x="60" y="30" font-size="20">牛</text>
+  <!-- 虎 -->
+  <text x="100" y="30" font-size="20">虎</text>
+  <!-- 兔 -->
+  <text x="140" y="30" font-size="20">兔</text>
+  <!-- 龙 -->
+  <text x="20" y="70" font-size="20">龙</text>
+  <!-- 蛇 -->
+  <text x="60" y="70" font-size="20">蛇</text>
+  <!-- 马 -->
+  <text x="100" y="70" font-size="20">马</text>
+  <!-- 羊 -->
+  <text x="140" y="70" font-size="20">羊</text>
+  <!-- 猴 -->
+  <text x="20" y="110" font-size="20">猴</text>
+  <!-- 鸡 -->
+  <text x="60" y="110" font-size="20">鸡</text>
+  <!-- 狗 -->
+  <text x="100" y="110" font-size="20">狗</text>
+  <!-- 猪 -->
+  <text x="140" y="110" font-size="20">猪</text>
+</svg>
